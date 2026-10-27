@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Qenbel | Software management, modernization and AI integration</title>
+  <meta name="description" content="Qenbel manages and modernizes your software: legacy to modern, MCP servers, secure AI bot integration, large refactors and front-end design. We work by email.">
+  <meta name="theme-color" content="#2a2a2a">
+  <link rel="canonical" href="https://qenbel.site/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Qenbel">
+  <meta property="og:title" content="Qenbel | We modernize and manage your software">
+  <meta property="og:description" content="Legacy to modern, MCP servers, secure AI bots, large refactors and front-end design. Start with an email.">
+  <meta property="og:url" content="https://qenbel.site/">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/main.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#services">Skip to services</a>
+
+  <!-- Shared water filter: tall, narrow noise so ripples read as horizontal bands. -->
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="ripple" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+      <feTurbulence id="ripple-noise" type="fractalNoise" baseFrequency="0.003 0.03" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap id="ripple-map" in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <main>
+    <!-- Scene 1: arrival -->
+    <section class="scene scene--hero" aria-labelledby="hero-title">
+      <div class="sky">
+        <header class="nav wrap">
+          <a class="brand" href="/" aria-label="Qenbel home">qenbel<span class="brand__dot" aria-hidden="true"></span></a>
+          <nav aria-label="Primary">
+            <a href="#services">Services</a>
+            <a href="#how">How we work</a>
+            <a href="#contact">Contact</a>
+          </nav>
+        </header>
+        <div class="moon" aria-hidden="true"></div>
+      </div>
+      <div class="beacon" aria-hidden="true"></div>
+
+      <div class="shore">
+        <div class="wrap shore__row" data-mirror-source>
+          <h1 id="hero-title" class="display">We modernize and manage your software.</h1>
+          <div class="shore__aside">
+            <p class="lead">Qenbel takes on legacy systems, AI integrations and front-end redesigns for teams of any size. Tell us what you run and what needs to change.</p>
+            <p class="actions">
+              <a class="btn" href="mailto:admin.qenbel@gmail.com?subject=Project%20enquiry&amp;body=What%20do%20you%20run%20today%3F%0A%0AWhat%20needs%20to%20change%3F%0A%0AAny%20deadline%3F">Email us</a>
+              <a class="textlink" href="#services">See services</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lake" aria-hidden="true" data-lake data-moon="72" data-beacon="90">
+        <div class="lake__mirror"><div class="wrap shore__row"></div></div>
+        <div class="glints glints--moon"></div>
+        <div class="glints glints--beacon"></div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section wrap" aria-labelledby="services-title">
+      <div class="section__head">
+        <h2 id="services-title" class="h2">What we take on</h2>
+        <p class="section__note">Seven kinds of work. Most projects combine two or three.</p>
+      </div>
+      <ul class="services">
+        <li>
+          <h3>Manage your software</h3>
+          <p>We run it day to day: updates, monitoring, fixes and incident response, so your team can keep building instead of keeping the lights on.</p>
+        </li>
+        <li>
+          <h3>MCP servers</h3>
+          <p>We build and host MCP servers that let AI assistants use your data and tools, with the access limits you set.</p>
+        </li>
+        <li>
+          <h3>Modernize your current software</h3>
+          <p>Keep what works and replace what doesn't. Upgrade frameworks, structure and performance in steps, without pausing the business.</p>
+        </li>
+        <li>
+          <h3>Legacy to modern</h3>
+          <p>Move old desktop apps, on-premise servers and out-of-support stacks to current languages and the cloud, with your data intact.</p>
+        </li>
+        <li>
+          <h3>AI bots inside your software, built secure</h3>
+          <p>Add assistants and automation to your product with permissions, data privacy and abuse protection designed in from the start.</p>
+        </li>
+        <li>
+          <h3>Large refactors and system redesign with AI tools</h3>
+          <p>Untangle big codebases and redraw whole systems faster with AI-assisted analysis. A person reviews every change before it ships.</p>
+        </li>
+        <li>
+          <h3>Front-end design, small to large</h3>
+          <p>From a single landing page to a full product interface: designed, built and tested on phones and desktops.</p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- How we work -->
+    <section id="how" class="section wrap" aria-labelledby="how-title">
+      <div class="section__head">
+        <h2 id="how-title" class="h2">Everything happens by email</h2>
+        <p class="section__note">No portal to learn and no forms to fill in.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>You write to us</h3>
+          <p>Describe what you run, what hurts and when it needs to be fixed. Rough notes are fine.</p>
+        </li>
+        <li>
+          <h3>We reply with a plan</h3>
+          <p>You get questions, a written scope and a price, so you know what you are agreeing to.</p>
+        </li>
+        <li>
+          <h3>We do the work</h3>
+          <p>Progress, decisions and hand-over notes arrive in the same thread, where you can find them later.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Scene 2: contact -->
+    <section id="contact" class="scene scene--contact" aria-labelledby="contact-title">
+      <div class="sky sky--short"></div>
+
+      <div class="shore">
+        <div class="wrap shore__row shore__row--stack" data-mirror-source>
+          <h2 id="contact-title" class="h2 h2--quiet">Start with an email</h2>
+          <a class="mail" href="mailto:admin.qenbel@gmail.com?subject=Project%20enquiry&amp;body=What%20do%20you%20run%20today%3F%0A%0AWhat%20needs%20to%20change%3F%0A%0AAny%20deadline%3F">admin.qenbel@gmail.com</a>
+          <p class="actions">
+            <button class="btn btn--ghost" type="button" data-copy="admin.qenbel@gmail.com">Copy address</button>
+          </p>
+        </div>
+      </div>
+
+      <div class="lake lake--contact" aria-hidden="true" data-lake>
+        <div class="lake__mirror"><div class="wrap shore__row shore__row--stack"></div></div>
+      </div>
+      <footer class="foot wrap">
+        <span>&copy; <span data-year>2026</span> Qenbel</span>
+        <span>qenbel.site</span>
+      </footer>
+      <p class="sr-only" data-copy-status role="status" aria-live="polite"></p>
+    </section>
+  </main>
+</body>
+</html>
