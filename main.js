@@ -1,87 +1,6 @@
 (function () {
   "use strict";
 
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---- Reflection: clone each shore row into its lake, inert ---- */
-
-  function mirrorAll() {
-    var sources = document.querySelectorAll("[data-mirror-source]");
-    Array.prototype.forEach.call(sources, function (source) {
-      var scene = source.closest(".scene");
-      var target = scene && scene.querySelector(".lake__mirror > .wrap");
-      if (!target) return;
-      var copy = source.cloneNode(true);
-      copy.removeAttribute("data-mirror-source");
-      Array.prototype.forEach.call(copy.querySelectorAll("[id]"), function (el) { el.removeAttribute("id"); });
-      Array.prototype.forEach.call(copy.querySelectorAll("a, button"), function (el) { el.setAttribute("tabindex", "-1"); });
-      target.replaceWith(copy);
-      copy.parentNode.setAttribute("inert", "");
-    });
-  }
-
-  /* ---- Glints: moon and beacon light broken up by the water ---- */
-
-  function buildGlints(lake) {
-    var cfg = [
-      { cls: ".glints--moon", at: parseFloat(lake.getAttribute("data-moon")), rows: 16, max: 150, min: 14 },
-      { cls: ".glints--beacon", at: parseFloat(lake.getAttribute("data-beacon")), rows: 9, max: 46, min: 8 }
-    ];
-    cfg.forEach(function (c) {
-      var host = lake.querySelector(c.cls);
-      if (!host || isNaN(c.at)) return;
-      host.style.setProperty("--at", c.at + "%");
-      var h = lake.clientHeight;
-      for (var i = 0; i < c.rows; i++) {
-        var t = i / c.rows;
-        var bar = document.createElement("i");
-        bar.style.left = c.at + "%";
-        bar.style.top = (6 + t * 0.9 * h) + "px";
-        bar.style.width = Math.round(c.min + (c.max - c.min) * Math.pow(t, 0.8) * (0.55 + Math.random() * 0.45)) + "px";
-        bar.style.setProperty("--dur", (3.4 + Math.random() * 3.2).toFixed(2) + "s");
-        bar.style.setProperty("--delay", (-Math.random() * 5).toFixed(2) + "s");
-        host.appendChild(bar);
-      }
-    });
-  }
-
-  /* ---- Ripple: the water settles when the page loads, then keeps a slow shimmer ---- */
-
-  var noise = document.getElementById("ripple-noise");
-  var map = document.getElementById("ripple-map");
-  var visible = 0;
-
-  function ripple() {
-    if (!noise || !map) return;
-    var start = performance.now();
-    var last = 0;
-    function frame(now) {
-      requestAnimationFrame(frame);
-      if (!visible || now - last < 66) return; /* about 15 fps keeps the filter cheap */
-      last = now;
-      var t = (now - start) / 1000;
-      var settle = Math.max(0, 1 - t / 2.6);            /* 1 -> 0 over the first 2.6s */
-      var scale = 5 + 24 * settle * settle;
-      map.setAttribute("scale", scale.toFixed(1));
-      var fy = 0.03 + 0.006 * Math.sin(t * 0.7) + 0.04 * settle;
-      noise.setAttribute("baseFrequency", "0.004 " + fy.toFixed(4));
-    }
-    requestAnimationFrame(frame);
-  }
-
-  function watchVisibility() {
-    var lakes = document.querySelectorAll("[data-lake]");
-    if (!("IntersectionObserver" in window)) { visible = 1; return; }
-    var seen = new Set();
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { e.isIntersecting ? seen.add(e.target) : seen.delete(e.target); });
-      visible = seen.size;
-    });
-    Array.prototype.forEach.call(lakes, function (l) { io.observe(l); });
-  }
-
-  /* ---- Copy address ---- */
-
   function wireCopy() {
     var btn = document.querySelector("[data-copy]");
     var status = document.querySelector("[data-copy-status]");
@@ -93,12 +12,10 @@
         btn.textContent = "Copied";
         btn.setAttribute("data-copied", "");
         if (status) status.textContent = "Email address copied";
-        mirrorAll();
         setTimeout(function () {
           btn.textContent = label;
           btn.removeAttribute("data-copied");
           if (status) status.textContent = "";
-          mirrorAll();
         }, 2000);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -109,20 +26,53 @@
     });
   }
 
+  /* Loading screen: real readiness (fonts + page load) with a minimum run time so it reads as a moment. */
+  function loader() {
+    var el = document.getElementById("loader");
+    if (!el) return;
+    var root = document.documentElement;
+    if (!root.classList.contains("is-loading")) { el.remove(); return; }
+
+    var count = el.querySelector("[data-count]");
+    var behind = document.querySelectorAll("header.nav, main");
+    Array.prototype.forEach.call(behind, function (n) { n.setAttribute("inert", ""); });
+
+    var MIN = 1900, start = performance.now(), ready = false, shown = 0;
+    function markReady() { ready = true; }
+    var fonts = document.fonts && document.fonts.ready ? document.fonts.ready : null;
+    var loaded = new Promise(function (r) {
+      if (document.readyState === "complete") r(); else window.addEventListener("load", r);
+    });
+    Promise.all([fonts, loaded]).then(markReady, markReady);
+    setTimeout(markReady, 6000); /* never trap a visitor on a slow font request */
+
+    function leave() {
+      el.classList.add("is-leaving");
+      setTimeout(function () {
+        root.classList.remove("is-loading");
+        Array.prototype.forEach.call(behind, function (n) { n.removeAttribute("inert"); });
+      }, 350);
+      setTimeout(function () { el.remove(); }, 1100);
+    }
+
+    function frame(now) {
+      var t = Math.min(1, (now - start) / MIN);
+      var target = (1 - Math.pow(1 - t, 3)) * 100;
+      if (!ready) target = Math.min(target, 92);
+      shown = Math.max(shown, target);
+      el.style.setProperty("--p", shown.toFixed(1));
+      count.textContent = Math.round(shown);
+      if (shown >= 99.5 && ready) { count.textContent = 100; el.style.setProperty("--p", 100); leave(); return; }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
   function init() {
+    loader();
     var year = document.querySelector("[data-year]");
     if (year) year.textContent = new Date().getFullYear();
-
-    mirrorAll();
     wireCopy();
-    Array.prototype.forEach.call(document.querySelectorAll("[data-lake]"), buildGlints);
-
-    if (reduceMotion) {
-      if (map) map.setAttribute("scale", "5");
-    } else {
-      watchVisibility();
-      ripple();
-    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
