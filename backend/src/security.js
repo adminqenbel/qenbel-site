@@ -1,10 +1,23 @@
+import { isIP } from "node:net";
+
 // Small in-memory protections. Fine for one Render instance; use Redis or Supabase if you scale out.
 
-// Express middleware: at most `max` requests per `windowMs` for each client IP.
-export function rateLimiter({ windowMs, max }) {
+// Which address counts as "the visitor". Behind Cloudflare (Render) the app only ever sees proxy
+// addresses, so Cloudflare's own CF-Connecting-IP header carries the real one, and clients cannot
+// overwrite it. Only set CLIENT_IP_HEADER when the host really overwrites that header.
+export function clientKey(req, header) {
+  if (header) {
+    const raw = String(req.headers[header] ?? "").split(",")[0].trim();
+    if (isIP(raw)) return raw;
+  }
+  return req.ip;
+}
+
+// Express middleware: at most `max` requests per `windowMs` for each client address.
+export function rateLimiter({ windowMs, max, ipHeader = "" }) {
   const take = keyedLimit({ windowMs, max });
   return (req, res, next) => {
-    if (take(req.ip)) return next();
+    if (take(clientKey(req, ipHeader))) return next();
     res.setHeader("Retry-After", Math.ceil(windowMs / 1000));
     res.status(429).json({ error: "rate_limited", message: "Too many requests. Please wait a moment." });
   };

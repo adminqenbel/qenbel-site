@@ -21,7 +21,6 @@ const schema = {
             properties: {
               serviceId: { type: "STRING", enum: catalogue.services.map((s) => s.id) },
               tier: { type: "STRING", enum: ["starter", "standard", "advanced", "custom"] },
-              quantity: { type: "INTEGER" },
               customHours: { type: "INTEGER" },
               commitMonths: { type: "INTEGER" },
             },

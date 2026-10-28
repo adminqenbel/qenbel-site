@@ -2,12 +2,13 @@
   "name": "qenbel-api",
   "version": "1.0.0",
   "private": true,
-  "description": "QenBel assistant and quote API (Gemini + email)",
+  "description": "QenBel assistant API (Gemini)",
   "type": "module",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js",
+    "local": "node --env-file=.env src/server.js",
+    "dev": "node --env-file=.env --watch src/server.js",
     "test": "node --test"
   },
   "engines": {

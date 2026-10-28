@@ -8,7 +8,7 @@ process.env.HISTORY_SECRET = "test-secret-not-used-anywhere-else";
 const { sanitizeReply, cleanHistory, sign, verify } = await import("../src/history.js");
 const { buildQuote, catalogue } = await import("../src/pricing.js");
 const { sanitizeRates } = await import("../src/fx.js");
-const { dailyBudget, keyedLimit } = await import("../src/security.js");
+const { dailyBudget, keyedLimit, clientKey } = await import("../src/security.js");
 
 test("custom tier can never undercut the Starter tier", () => {
   for (const s of catalogue.services) {
@@ -25,7 +25,8 @@ test("quote: unknown services, tiers and absurd numbers are ignored or clamped",
     { serviceId: "manage-software", tier: "starter", commitMonths: -50 },
   ] });
   assert.equal(q.lines.length, 2);
-  assert.equal(q.lines[0].quantity, 10);
+  assert.equal(q.lines[0].quantity, 1); // a quantity can never multiply a tier price
+  assert.equal(q.lines[0].amount, catalogue.services.find((s) => s.id === "mcp-servers").tiers.standard.price);
   assert.equal(q.lines[1].commitMonths, 0);
 });
 
@@ -83,4 +84,13 @@ test("budget: only calls that take() spend it, and the limit holds", () => {
 test("keyed limit counts each key separately", () => {
   const take = keyedLimit({ windowMs: 60_000, max: 2 });
   assert.deepEqual([take("a"), take("a"), take("a"), take("b")], [true, true, false, true]);
+});
+
+test("client address: the trusted header wins, junk falls back, and no header means req.ip", () => {
+  const req = (h, ip = "10.0.0.1") => ({ ip, headers: h });
+  assert.equal(clientKey(req({ "cf-connecting-ip": "203.0.113.9" }), "cf-connecting-ip"), "203.0.113.9");
+  assert.equal(clientKey(req({ "cf-connecting-ip": "203.0.113.9, 1.1.1.1" }), "cf-connecting-ip"), "203.0.113.9");
+  assert.equal(clientKey(req({ "cf-connecting-ip": "not-an-ip<script>" }), "cf-connecting-ip"), "10.0.0.1");
+  assert.equal(clientKey(req({ "cf-connecting-ip": "203.0.113.9" }), ""), "10.0.0.1"); // header ignored unless configured
+  assert.equal(clientKey(req({}), "cf-connecting-ip"), "10.0.0.1");
 });

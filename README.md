@@ -14,10 +14,10 @@ Contact is email only: admin.qenbel@gmail.com
 ## Run it locally
 
 ```
-# 1) the API (Node 20+). Pass the key in your shell; do not put it in a file you commit.
+# 1) the API (Node 20.6+). Settings come from backend/.env, which is git-ignored.
 cd backend
 npm install
-GEMINI_API_KEY=your-key TRUST_PROXY=0 npm start
+npm run local                                        # reads backend/.env (copy .env.example to .env and fill it in)
 npm test                                             # security regression tests
 
 # 2) the site, from the repo root

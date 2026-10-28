@@ -39,7 +39,7 @@ Checked and fine: no secrets in any file or in git history; `npm audit` reports 
 ## Set these when you deploy
 
 1. **Render:** `GEMINI_API_KEY` (you paste it) and `HISTORY_SECRET` (the blueprint generates it). Without a stable `HISTORY_SECRET`, restarts invalidate old signatures; chats keep working, the assistant just loses earlier replies as context.
-2. **`TRUST_PROXY`:** deploy, then send requests from two different networks. If both are limited together, raise it; if a fake `X-Forwarded-For` changes your limit bucket, lower it.
+2. **`CLIENT_IP_HEADER=cf-connecting-ip` on Render.** Checked on the live API: without it, 15 rapid calls were never limited (Render's proxies make the app see changing addresses), so the per-IP limit did nothing. With it, limits follow the real visitor address from Cloudflare. After setting it, repeat the test in `DEPLOY.md`.
 3. **Vercel CSP:** `connect-src` in `vercel.json` names `qenbel-api.onrender.com` and `api.qenbel.site`. If your API address differs, change it there and in `config.js`.
 4. **Rotate the Gemini key** that was pasted into the chat during development.
 

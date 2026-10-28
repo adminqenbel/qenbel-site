@@ -1,0 +1,31 @@
+# Pings the Render API every 10 minutes so the free instance does not go to sleep.
+# Setup: in the GitHub repo go to Settings > Secrets and variables > Actions > Variables,
+# and add a variable named API_URL with your Render address (https://your-service.onrender.com).
+# Without that variable this workflow does nothing.
+#
+# Limits: GitHub runs schedules on a best-effort basis (a run can be a few minutes late), and
+# pauses scheduled workflows after 60 days with no activity in the repository.
+name: keep-api-awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  ping:
+    if: ${{ vars.API_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/keep-alive.mjs "$API_URL"
+        env:
+          API_URL: ${{ vars.API_URL }}

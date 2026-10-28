@@ -49,7 +49,9 @@ export function buildQuote(input) {
         timeline: "Agreed with the team",
       };
     } else if (svc.tiers[tier]) {
-      const quantity = clamp(int(it?.quantity, 1), 1, 10);
+      // One line is one tier of one service. Scale beyond a tier is a Custom quote or the team's call;
+      // a model-chosen multiplier turned "3 apps" into 3 x the Advanced price (about 2 crore in INR).
+      const quantity = 1;
       line = {
         tier, tierLabel: catalogue.tiers[tier], quantity,
         unitPrice: svc.tiers[tier].price,

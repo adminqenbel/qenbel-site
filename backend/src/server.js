@@ -41,8 +41,8 @@ app.get("/api/pricing", (_req, res) => {
   res.json(publicCatalogue);
 });
 
-const perDay = rateLimiter({ windowMs: 24 * 60 * 60 * 1000, max: config.limits.chatPerDayPerIp });
-const perMinute = rateLimiter({ windowMs: 60_000, max: config.limits.chatPerMinute });
+const perDay = rateLimiter({ windowMs: 24 * 60 * 60 * 1000, max: config.limits.chatPerDayPerIp, ipHeader: config.clientIpHeader });
+const perMinute = rateLimiter({ windowMs: 60_000, max: config.limits.chatPerMinute, ipHeader: config.clientIpHeader });
 const budget = dailyBudget(config.limits.chatPerDayGlobal);
 
 // The estimate is sent to the team by the visitor from their own email account (Gmail, their email

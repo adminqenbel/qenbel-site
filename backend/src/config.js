@@ -12,6 +12,9 @@ export const config = {
   // spoof an IP with X-Forwarded-For, lower it.
   trustProxy: num(process.env.TRUST_PROXY, 1),
 
+  // Header that carries the real visitor address (on Render: cf-connecting-ip). Empty means use req.ip.
+  clientIpHeader: (process.env.CLIENT_IP_HEADER || "").trim().toLowerCase(),
+
   geminiKey: process.env.GEMINI_API_KEY || "",
   // Tried in order. If one is overloaded or retired, the next takes over.
   models: list(process.env.GEMINI_MODELS, "gemini-3.5-flash,gemini-3.8-flash,gemini-3.5-flash-lite"),
