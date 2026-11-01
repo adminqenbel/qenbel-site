@@ -1,0 +1,95 @@
+/* QenBel theme: shared by every page (home, assistant, About, Privacy Policy, Terms of Use, Compliance).
+   Flat and simple: white and pale blue, navy text, one blue for actions, thin rules. No glass, gradients or shadows.
+   One family, Hanken Grotesk, served from /fonts so nothing is fetched from another company's server. */
+
+@font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 300 800; font-display: swap; src: url("/fonts/hanken-grotesk.woff2") format("woff2"); }
+@font-face { font-family: "Hanken Grotesk"; font-style: italic; font-weight: 300 800; font-display: swap; src: url("/fonts/hanken-grotesk-italic.woff2") format("woff2"); }
+
+:root {
+  --ink: #071A44;
+  --ink-2: rgba(7, 26, 68, 0.76);
+  --blue: #1E55CC;
+  --blue-dark: #17449F;
+  --navy: #0B2A6B;
+  --pale: #F2F7FE;
+  --hair: rgba(7, 26, 68, 0.14);
+
+  --font: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; -webkit-text-size-adjust: 100%; background: #fff; }
+body {
+  margin: 0; background: #fff; color: var(--ink); font-family: var(--font); font-weight: 400;
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem); line-height: 1.65; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: inherit; text-underline-offset: 0.2em; }
+button { font: inherit; color: inherit; cursor: pointer; }
+[hidden] { display: none !important; }
+::selection { background: var(--blue); color: #fff; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+.sprite { position: absolute; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 1rem; top: -4rem; z-index: 120; padding: 0.6rem 1rem; color: #fff; background: var(--blue); border-radius: 999px; text-decoration: none; }
+.skip:focus { top: 1rem; }
+.wrap { width: min(100%, 78rem); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* ---------- Type ---------- */
+
+.h2 { font-weight: 300; font-size: clamp(2.1rem, 4.2vw, 3.2rem); line-height: 1.06; letter-spacing: -0.03em; text-wrap: balance; }
+.lead { max-width: 40rem; color: var(--ink-2); font-size: clamp(1.05rem, 1.25vw, 1.2rem); }
+
+/* ---------- Logo: the name, set in type ---------- */
+
+.logo { display: inline-block; color: inherit; text-decoration: none; font-weight: 700; font-size: 1.4rem; line-height: 1; letter-spacing: -0.035em; }
+
+/* ---------- Top bar: the same on every page ---------- */
+
+.nav {
+  position: fixed; z-index: 50; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  padding: 0.7rem var(--gutter); background: #fff; border-bottom: 1px solid var(--hair);
+}
+.nav nav { display: flex; gap: clamp(1rem, 2.6vw, 2rem); margin-inline: auto; font-size: 0.95rem; font-weight: 500; }
+.nav nav a { color: var(--ink-2); text-decoration: none; }
+.nav nav a:hover, .nav nav a[aria-current="page"] { color: var(--blue); }
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 3rem; padding: 0.7rem 1.55rem;
+  font-weight: 600; font-size: 0.975rem; line-height: 1; color: #fff; text-decoration: none;
+  background: var(--blue); border: 1.5px solid var(--blue); border-radius: 999px; transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.btn:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+.btn--sm { min-height: 2.5rem; padding: 0.5rem 1.15rem; font-size: 0.9rem; }
+.btn--ghost { color: var(--blue); background: transparent; }
+.btn--ghost:hover { color: #fff; background: var(--blue); border-color: var(--blue); }
+.btn--white { color: var(--navy); background: #fff; border-color: #fff; }
+.btn--white:hover { background: var(--pale); border-color: var(--pale); }
+.btn--outline { color: #fff; background: transparent; border-color: rgba(255, 255, 255, 0.6); }
+.btn--outline:hover { color: var(--navy); background: #fff; border-color: #fff; }
+.btn[data-copied] { color: var(--navy); background: #fff; border-color: #fff; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chips li { padding: 0.2rem 0.75rem; font-size: 0.85rem; line-height: 1.5; border: 1px solid var(--hair); border-radius: 999px; }
+
+/* ---------- Footer: the same on every page, with About and the documents ---------- */
+
+.site-foot { padding-block: clamp(2.5rem, 6vw, 4rem) 5rem; color: var(--ink-2); background: var(--pale); border-top: 1px solid var(--hair); font-size: 0.95rem; }
+.site-foot__grid { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: 2rem clamp(1.5rem, 4vw, 4rem); }
+.site-foot .logo { color: var(--ink); font-size: 1.5rem; }
+.site-foot__brand p { margin-top: 0.75rem; max-width: 26rem; }
+.site-foot h2 { margin-bottom: 0.7rem; font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+.site-foot ul { display: grid; gap: 0.45rem; }
+.site-foot a:not(.logo) { text-decoration: none; }
+.site-foot a:not(.logo):hover { color: var(--blue); text-decoration: underline; }
+.site-foot__base { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--hair); font-size: 0.875rem; }
+
+@media (max-width: 52rem) { .site-foot__grid { grid-template-columns: 1fr 1fr; } .site-foot__brand { grid-column: 1 / -1; } }
+@media (max-width: 40rem) { .nav nav { display: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }

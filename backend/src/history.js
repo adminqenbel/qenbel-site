@@ -1,5 +1,4 @@
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
-import { buildQuote } from "./pricing.js";
 
 // Conversation history comes from the browser, so the browser could invent things the assistant
 // "said". Every assistant reply is signed here, and any assistant turn without a valid signature
@@ -29,10 +28,7 @@ export function cleanHistory(input, keep) {
     if (!content) continue;
     if (m?.role === "assistant") {
       if (!verify(content, m.sig)) continue; // forged or stale: drop it
-      let note = "";
-      const card = m.quote ? buildQuote(m.quote) : null; // rebuilt from catalogue ids, never from client text
-      if (card) note = `\n[Card shown: ${card.mode}${card.lines.length ? " - " + card.lines.map((l) => `${l.serviceName} (${l.tier})`).join("; ") : ""}]`;
-      out.push({ role: "assistant", content: content + note });
+      out.push({ role: "assistant", content });
     } else {
       out.push({ role: "user", content });
     }
@@ -48,6 +44,10 @@ export function sanitizeReply(text, teamEmail) {
   return String(text ?? "")
     .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "")
     .replace(/\[([^\]]{0,200})\]\([^)]{0,500}\)/g, "$1")
+    .replace(/\*\*([^*\n]{1,200})\*\*/g, "$1") // the chat shows plain text, so drop markdown bold
+    .replace(/(^|\s)\*([^*\s][^*\n]{0,200}?)\*(?=\s|[.,;:!?]|$)/g, "$1$2")
+    .replace(/`([^`\n]{1,200})`/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
     .replace(/\b(?:https?:\/\/|ftp:\/\/|www\.)[^\s<>"')]+/gi, "[link removed]")
     .replace(/\b[a-z0-9.-]+\.[a-z]{2,}\/\S*/gi, "[link removed]")
     .replace(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/gi, (m) => (m.toLowerCase() === String(teamEmail).toLowerCase() ? m : "[email removed]"))

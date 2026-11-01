@@ -14,13 +14,14 @@ const h = await get("/health");
 check("health answers {ok:true}", h.ok && (await h.json()).ok === true);
 check("security headers present", h.headers.get("x-content-type-options") === "nosniff" && !!h.headers.get("strict-transport-security") && !!h.headers.get("content-security-policy"));
 
-const ok = await get("/api/rates", { origin: site });
+const ok = await get("/health", { origin: site });
 check(`CORS allows ${site}`, ok.headers.get("access-control-allow-origin") === site);
-const bad = await get("/api/rates", { origin: "https://evil.example" });
+const bad = await get("/health", { origin: "https://evil.example" });
 check("CORS refuses other sites", bad.status === 403);
 
-const geo = await (await get("/api/geo?hint=IN", { origin: site })).json();
-check("location finder works", typeof geo.currency === "string", `${geo.country || "none"} -> ${geo.currency} (${geo.source})`);
+// The removed endpoints must stay gone (the assistant no longer prices or converts currency).
+const gone = await get("/api/pricing", { origin: site });
+check("price list endpoint is gone", gone.status === 404, `status ${gone.status}`);
 
 // The rate limit must follow the real visitor, so a fake X-Forwarded-For must not get around it.
 await new Promise((r) => setTimeout(r, 1000));

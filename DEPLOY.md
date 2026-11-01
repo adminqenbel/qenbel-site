@@ -50,7 +50,7 @@ Run the live check (no Gemini calls, about 20 requests):
 node scripts/check-api.mjs https://api.qenbel.site https://qenbel.site
 ```
 
-It checks health, security headers, that only your site can call the API, the location finder, and that the rate limit cannot be dodged with a fake `X-Forwarded-For`. In Render, set `CLIENT_IP_HEADER=cf-connecting-ip` (it is in `backend/.env.render`); without it the rate limit does not work on Render.
+It checks health, security headers, that only your site can call the API, that the old price endpoint is gone, and that the rate limit cannot be dodged with a fake `X-Forwarded-For`. In Render, set `CLIENT_IP_HEADER=cf-connecting-ip` (it is in `backend/.env.render`); without it the rate limit does not work on Render.
 
 
 Follow `SECURITY.md`: set `TRUST_PROXY` correctly, rotate the old Gemini key, and test the chat on your phone.

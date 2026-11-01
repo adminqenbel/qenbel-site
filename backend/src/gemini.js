@@ -1,39 +1,7 @@
 import { config } from "./config.js";
-import { catalogue } from "./pricing.js";
 import { systemPrompt } from "./prompt.js";
 
 const BASE = "https://generativelanguage.googleapis.com/v1beta";
-
-const schema = {
-  type: "OBJECT",
-  properties: {
-    reply: { type: "STRING" },
-    quote: {
-      type: "OBJECT",
-      nullable: true,
-      properties: {
-        title: { type: "STRING" },
-        mode: { type: "STRING", enum: ["estimate", "list", "offers"] },
-        items: {
-          type: "ARRAY",
-          items: {
-            type: "OBJECT",
-            properties: {
-              serviceId: { type: "STRING", enum: catalogue.services.map((s) => s.id) },
-              tier: { type: "STRING", enum: ["starter", "standard", "advanced", "custom"] },
-              customHours: { type: "INTEGER" },
-              commitMonths: { type: "INTEGER" },
-            },
-            required: ["serviceId", "tier"],
-          },
-        },
-        assumptions: { type: "ARRAY", items: { type: "STRING" } },
-      },
-      required: ["title", "items"],
-    },
-  },
-  required: ["reply"],
-};
 
 // Gemini wants alternating roles that start with the user.
 function toContents(messages) {
@@ -68,13 +36,11 @@ export async function askGemini(messages) {
 
   const generationConfig = {
     temperature: 0.4,
-    maxOutputTokens: 2500,
-    responseMimeType: "application/json",
-    responseSchema: schema,
+    maxOutputTokens: 1500,
   };
 
   const body = {
-    systemInstruction: { parts: [{ text: systemPrompt() }] },
+    systemInstruction: { parts: [{ text: systemPrompt(config.teamEmail) }] },
     contents: toContents(messages),
     generationConfig,
   };
@@ -106,13 +72,5 @@ export async function askGemini(messages) {
   const text = cand?.content?.parts?.map((p) => p.text || "").join("") || "";
   if (!text) throw new GeminiError("Empty reply from Gemini", 502);
 
-  try {
-    const parsed = JSON.parse(text);
-    return {
-      reply: String(parsed.reply || "").slice(0, 2000) || "Sorry, I could not put that into words. Could you rephrase?",
-      quote: parsed.quote && typeof parsed.quote === "object" ? parsed.quote : null,
-    };
-  } catch {
-    return { reply: text.slice(0, 2000), quote: null };
-  }
+  return { reply: text.slice(0, 2000) };
 }

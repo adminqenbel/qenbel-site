@@ -6,8 +6,9 @@ Landing page and assistant for [qenbel.site](https://qenbel.site).
 |---|---|---|
 | Landing page (static, no build) | `index.html`, `styles.css`, `main.js`, `preload.js` | Vercel |
 | Assistant page (ChatGPT-style) | `chat.html`, `chat-page.css`, `chat-page.js`, `orb.js`, `config.js` | Vercel |
-| Assistant API (Gemini + email) | `backend/` | Render (`render.yaml`) |
-| Prices, offers, disclaimer | `backend/data/pricing.json`, explained in `PRICING.md` | with the API |
+| Assistant API (Gemini) | `backend/` | Render (`render.yaml`) |
+| Legal pages | `privacy.html`, `terms.html`, `compliance.html`, `legal.css` | Vercel |
+| What the assistant knows about QenBel | `backend/src/prompt.js` | with the API |
 
 Contact is email only: admin.qenbel@gmail.com
 
@@ -30,7 +31,7 @@ Add `?loader` to the landing page URL to replay the first-visit loading screen.
 
 **API on Render**
 1. New > Blueprint > select this repo (`render.yaml` is picked up).
-2. Set one secret in the dashboard: `GEMINI_API_KEY`. `HISTORY_SECRET` is generated for you. Then follow the checklist in `SECURITY.md`. No email account is needed: visitors send the estimate from their own email (Gmail, their email app or Outlook).
+2. Set one secret in the dashboard: `GEMINI_API_KEY`. `HISTORY_SECRET` is generated for you. Then follow the checklist in `SECURITY.md`. No email account is needed: visitors email the team from their own email (Gmail, their email app or Outlook).
 3. Open `https://<your-service>.onrender.com/health`; it should answer `{"ok":true}`.
 
 **Site on Vercel**

@@ -24,9 +24,9 @@
     ctx.clearRect(0, 0, s, s);
     ctx.save();
     ctx.beginPath(); ctx.arc(r, r, r * 0.92, 0, 6.2832); ctx.clip();
-    ctx.fillStyle = "#0B0B0B"; ctx.fillRect(0, 0, s, s);
+    ctx.fillStyle = "#0B2A6B"; ctx.fillRect(0, 0, s, s);
     ctx.globalCompositeOperation = "lighter";
-    var blobs = [["255,214,10", 0.0], ["255,168,0", 2.1], ["255,244,160", 4.2], ["255,214,10", 5.3]];
+    var blobs = [["80,140,255", 0.0], ["37,99,217", 2.1], ["190,220,255", 4.2], ["120,175,255", 5.3]];
     for (var i = 0; i < blobs.length; i++) {
       var ph = blobs[i][1];
       var x = r + Math.cos(t * (0.8 + i * 0.23) + ph) * r * spread;
@@ -40,7 +40,7 @@
     ctx.restore();
     ctx.beginPath(); ctx.arc(r, r, r * 0.92, 0, 6.2832);
     ctx.lineWidth = Math.max(1.5, s * 0.04);
-    ctx.strokeStyle = "rgba(255,214,10," + (thinking ? 1 : 0.8) + ")"; ctx.stroke();
+    ctx.strokeStyle = "rgba(200,225,255," + (thinking ? 1 : 0.8) + ")"; ctx.stroke();
   };
 
   function loop(now) {

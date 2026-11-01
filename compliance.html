@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compliance and Regulation | QenBel</title>
+  <meta name="description" content="The Indian laws QenBel operates under and the engineering, security and data protection rules we follow on every engagement.">
+  <meta name="theme-color" content="#FFFFFF">
+  <link rel="canonical" href="https://qenbel.site/compliance">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/theme.css">
+  <link rel="stylesheet" href="/legal.css">
+</head>
+<body>
+  <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+    <symbol id="i-go" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  </svg>
+  <a class="skip" href="#main">Skip to the page</a>
+  <header class="nav">
+    <a class="logo" href="/" aria-label="QenBel home">QenBel</a>
+    <nav aria-label="Primary">
+      <a href="/#services">Services</a>
+      <a href="/#how">How we work</a>
+      <a href="/chat.html">Assistant</a>
+    </nav>
+    <a class="btn btn--sm" href="/#contact">Request an assessment</a>
+  </header>
+
+  <div class="page">
+  <main id="main" class="doc">
+    <h1>Compliance and Regulation</h1>
+    <p class="meta">Effective 1 November 2026. Last updated 1 November 2026.</p>
+    <p class="intro">Our principle: <strong>software is not production-ready just because it works.</strong> It also has to meet agreed security, quality, performance and operational requirements. This page lists the Indian laws that apply to QenBel, and the rules we work by on every engagement.</p>
+
+    <nav class="toc" aria-label="Contents">
+      <strong>Contents</strong>
+      <ol>
+        <li><a href="#laws">Laws we operate under</a></li>
+        <li><a href="#access">Authorised access only</a></li>
+        <li><a href="#data">Protecting data</a></li>
+        <li><a href="#ai">Using AI responsibly</a></li>
+        <li><a href="#change">Changing client systems safely</a></li>
+        <li><a href="#incidents">Security incidents</a></li>
+        <li><a href="#paper">Written agreements</a></li>
+        <li><a href="#standards">Standards and what we do not claim</a></li>
+        <li><a href="#report">Reporting a security issue</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </nav>
+
+    <section id="laws">
+      <h2>1. Laws we operate under</h2>
+      <p>QenBel is based in India and works to Indian law first. Where a client's location, sector or data brings other laws into play, we agree how to meet them in writing before work starts.</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Law or rule</th><th>What it means for QenBel</th></tr></thead>
+          <tbody>
+            <tr><td>Information Technology Act, 2000</td><td>Governs electronic records, contracts and cyber offences. We do not access, test or alter systems without authorisation, and our online terms are electronic records under this Act.</td></tr>
+            <tr><td>Digital Personal Data Protection Act, 2023, and the DPDP Rules, 2025</td><td>Governs how personal data is collected and used: notice and consent, purpose limits, security safeguards, breach notice, erasure, and the rights of individuals. The Rules were notified on 14 November 2025 and come into force in phases, with the main duties due on 13 May 2027. We already work to these principles and are building the rest into our processes ahead of the date. See our <a href="/privacy.html">Privacy Policy</a>.</td></tr>
+            <tr><td>CERT-In Directions, 2022</td><td>Require reporting of specified cyber security incidents to CERT-In within six hours of noticing them, a designated point of contact, and keeping system logs for 180 days within India. We report incidents on this timeline, and for systems we operate on a client's behalf we keep the logs the Directions require, as agreed in the contract. Our CERT-In point of contact is the email address in section 10.</td></tr>
+            <tr><td>IT (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011</td><td>The existing rules on sensitive personal data, which apply during the transition to the DPDP Act. We handle such data only where needed, with reasonable security and written consent.</td></tr>
+            <tr><td>Indian Contract Act, 1872</td><td>Our service agreements, obligations and remedies. No work starts on an assistant conversation or an informal message; it starts on a written agreement.</td></tr>
+            <tr><td>Copyright Act, 1957</td><td>Ownership and licensing of software. The written agreement states who owns what we deliver, and we respect third-party and open-source licences in the software we touch.</td></tr>
+            <tr><td>Consumer Protection Act, 2019, and the Consumer Protection (E-Commerce) Rules, 2020</td><td>We do not use misleading claims, and we state scope and charges clearly. Our website does not sell goods or services online. Services are agreed individually.</td></tr>
+            <tr><td>Goods and Services Tax law</td><td>Tax invoices and GST are handled as the law requires for our services.</td></tr>
+            <tr><td>Foreign laws such as the GDPR</td><td>Applied for a client only where their location, sector or data brings them in scope, and as agreed in the contract.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note"><strong>This page describes how we work. It is not legal advice</strong> and does not replace a written agreement.</p>
+    </section>
+
+    <section id="access">
+      <h2>2. Authorised access only</h2>
+      <ul>
+        <li>We access a client's code, repositories, environments, databases and infrastructure only with documented, written authorisation that names what we may reach.</li>
+        <li>We carry out security testing, vulnerability scanning or any attempt to exploit a weakness only inside a written scope, and never against a production environment without explicit written authorisation.</li>
+        <li>We refuse to test systems the requester does not own or control.</li>
+        <li>We use isolated environments and <strong>least-privilege</strong> credentials, with multi-factor authentication on the accounts we use. Access is removed when the work ends.</li>
+        <li>Secrets and credentials are handled in secure secret storage, never in chat, email bodies, source code or tickets.</li>
+      </ul>
+    </section>
+
+    <section id="data">
+      <h2>3. Protecting data</h2>
+      <ul>
+        <li>We collect and keep the minimum we need, and delete it when the work ends or the retention period in our Privacy Policy runs out.</li>
+        <li>Where a project involves personal data, we process it only on the client's written instructions, under a data processing agreement and security terms.</li>
+        <li>Client source code and data stay inside systems the client approves. They are not shared with other clients, and not used to train anything.</li>
+        <li>Confidentiality applies to everyone who works for QenBel.</li>
+      </ul>
+    </section>
+
+    <section id="ai">
+      <h2>4. Using AI responsibly</h2>
+      <p>Because many of our clients built their software with AI tools, we hold ourselves to clear rules on AI in our own work:</p>
+      <ol>
+        <li>AI-generated code is never assumed to be production-ready.</li>
+        <li>Every critical change gets human review, and security-sensitive code gets extra scrutiny.</li>
+        <li>Dependencies are checked for known vulnerabilities and licence problems.</li>
+        <li>Secrets, API keys and credentials are never given to unauthorised AI tools.</li>
+        <li>Client source code goes to a third-party AI service only with the client's written permission and after we have assessed that service.</li>
+        <li>AI-assisted changes are tested, both automatically and by hand.</li>
+        <li>We check AI providers' data retention, training use and confidentiality terms before using them.</li>
+        <li>Production releases have approval, rollback and an audit record.</li>
+        <li>A critical vulnerability is fixed, or explicitly accepted in writing by the client's authorised person, before release.</li>
+        <li>The website's assistant is an AI. It is labelled as one, does not give prices or legal advice, and is not used to make decisions about people.</li>
+      </ol>
+    </section>
+
+    <section id="change">
+      <h2>5. Changing client systems safely</h2>
+      <ul>
+        <li>We never change a client's production system without a <strong>verified backup</strong>, testing and the client's release approval.</li>
+        <li>Each release has a rollback plan, and we keep a record of what changed, when and who approved it.</li>
+        <li>We tell the client plainly what we found, including what we did not or could not check.</li>
+      </ul>
+    </section>
+
+    <section id="incidents">
+      <h2>6. Security incidents</h2>
+      <ul>
+        <li>We investigate suspected incidents promptly, contain them, and keep a written record.</li>
+        <li>We report reportable cyber security incidents to CERT-In within six hours of noticing them, and tell affected clients as soon as we can.</li>
+        <li>If a personal data breach occurs, we notify the affected people and the Data Protection Board of India as the law requires.</li>
+      </ul>
+    </section>
+
+    <section id="paper">
+      <h2>7. Written agreements</h2>
+      <p>The website's terms are not a substitute for a signed agreement. Before work starts we agree in writing, as the engagement needs: scope and deliverables, confidentiality, fees and acceptance, security terms, data protection terms where personal data is involved, ownership of the work, and how extra work is approved. Support commitments, such as response times, are set per engagement. We do not promise a blanket uptime figure.</p>
+    </section>
+
+    <section id="standards">
+      <h2>8. Standards, and what we do not claim</h2>
+      <p>We use recognised references to guide our work, including the OWASP Top 10 and Application Security Verification Standard for application security, and the NIST Cybersecurity Framework 2.0 for organising security work.</p>
+      <p class="note"><strong>We hold no ISO/IEC 27001, ISO/IEC 27701 or SOC 2 certification, and we do not claim any.</strong> These are voluntary standards. We will say so here if that changes, and only after independent assessment. We also do not promise that any software will be free of defects or vulnerabilities.</p>
+    </section>
+
+    <section id="report">
+      <h2>9. Reporting a security issue</h2>
+      <p>If you believe you have found a weakness in qenbel.site or the assistant, please email <a href="mailto:admin.qenbel@gmail.com?subject=Security%20report">admin.qenbel@gmail.com</a> with the subject "Security report" and enough detail to reproduce it. Please do not access other people's data, disrupt the service, or publish the issue before we have had a reasonable time to fix it. We will acknowledge your report and keep you informed. We will not take action against good-faith research that follows these limits.</p>
+    </section>
+
+    <section id="contact">
+      <h2>10. Contact</h2>
+      <dl class="facts">
+        <div><dt>Company</dt><dd>QenBel</dd></div>
+        <div><dt>Founder</dt><dd>Hemapriyan R K</dd></div>
+        <div><dt>Legal, privacy, security and general enquiries</dt><dd><a href="mailto:admin.qenbel@gmail.com">admin.qenbel@gmail.com</a></dd></div>
+        <div><dt>How we communicate</dt><dd>By email only</dd></div>
+      </dl>
+    </section>
+  </main>
+
+  </div>
+
+  <footer class="site-foot">
+    <div class="wrap site-foot__grid">
+      <div class="site-foot__brand">
+        <a class="logo" href="/" aria-label="QenBel home">QenBel</a>
+        <p>Software engineering, security and production readiness. We work by email.</p>
+      </div>
+      <nav aria-label="Company">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about.html">About QenBel</a></li>
+          <li><a href="/#how">How we work</a></li>
+          <li><a href="mailto:admin.qenbel@gmail.com">admin.qenbel@gmail.com</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Documents">
+        <h2>Documents</h2>
+        <ul>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Use</a></li>
+          <li><a href="/compliance.html">Compliance and Regulation</a></li>
+          <li><a href="mailto:admin.qenbel@gmail.com?subject=Security%20report">Report a security issue</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="wrap site-foot__base">&copy; 2026 QenBel</div>
+  </footer>
+</body>
+</html>

@@ -3,32 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QenBel | Software management, modernization and AI integration</title>
-  <meta name="description" content="QenBel manages and modernizes your software: legacy to modern, MCP servers, secure AI bot integration, large refactors and front-end design. We work by email.">
-  <meta name="theme-color" content="#FFD60A">
+  <title>QenBel | Software engineering, security and production readiness</title>
+  <meta name="description" content="QenBel reviews, secures, tests and deploys software built with AI tools, traditional development or both. Start with an Application Health Check. We work by email.">
+  <meta name="theme-color" content="#FFFFFF">
   <link rel="canonical" href="https://qenbel.site/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="QenBel">
-  <meta property="og:title" content="QenBel | We modernize and manage your software">
-  <meta property="og:description" content="Legacy to modern, MCP servers, secure AI bots, large refactors and front-end design. Start with an email.">
+  <meta property="og:title" content="QenBel | Built an app with AI? We make it safe to launch.">
+  <meta property="og:description" content="Application health checks, code quality, security, performance and production readiness. Start with an email.">
   <meta property="og:url" content="https://qenbel.site/">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600..900&family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/preload.js"></script>
+  <link rel="stylesheet" href="/theme.css">
   <link rel="stylesheet" href="/styles.css">
   <script src="/main.js" defer></script>
   <script src="/orb.js" defer></script>
 </head>
 <body>
+
   <div class="loader" id="loader" role="status" aria-live="polite">
     <span class="sr-only">Loading QenBel</span>
-    <div class="loader__mark" aria-hidden="true">
-      <span class="loader__ghost">QenBel</span>
-      <span class="loader__fill">QenBel</span>
-    </div>
+    <div class="loader__mark" aria-hidden="true"><span class="loader__name">QenBel</span></div>
     <div class="loader__meta" aria-hidden="true">
       <span class="loader__label">Loading</span>
       <span class="loader__count"><span data-count>0</span>%</span>
@@ -38,225 +36,174 @@
   <a class="skip" href="#services">Skip to services</a>
 
   <header class="nav">
-    <a class="brand" href="/" aria-label="QenBel home">QenBel</a>
+    <a class="logo" href="/" aria-label="QenBel home">QenBel</a>
     <nav aria-label="Primary">
-      <a href="#services">Services</a>
-      <a href="#how">How we work</a>
+      <a href="/#services">Services</a>
+      <a href="/#how">How we work</a>
+      <a href="/chat.html">Assistant</a>
     </nav>
-    <a class="btn btn--sm" href="#contact">Email us</a>
+    <a class="btn btn--sm" href="/#contact">Request an assessment</a>
   </header>
 
   <main>
-    <!-- Hero: yellow, the name is the picture -->
-    <section class="hero on-yellow" aria-labelledby="hero-title">
-      <div class="wrap hero__top">
-        <h1 id="hero-title" class="headline">We modernize and manage your software.</h1>
-        <div class="hero__aside">
-          <p class="lead">QenBel takes on legacy systems, AI integrations and front-end redesigns for teams of any size. Tell us what you run and what needs to change.</p>
-          <p class="actions">
-            <a class="btn" href="/chat.html">Get an instant estimate</a>
-            <a class="btn btn--ghost" href="#services">See services</a>
-          </p>
-        </div>
-      </div>
-
-      <div class="wordmark" role="img" aria-label="QenBel">
-        <span class="wordmark__text" aria-hidden="true">
-          <span class="l"><span>Q</span></span><span class="l"><span>e</span></span><span class="l"><span>n</span></span><span class="l"><span>B</span></span><span class="l"><span>e</span></span><span class="l"><span>l</span></span>
-        </span>
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <h1 id="hero-title" class="headline">
+          <span class="headline__light">Built an app with AI?</span>
+          <span class="headline__bold">We make it safe to launch.</span>
+        </h1>
+        <p class="lead">QenBel reviews, secures, tests and deploys software built with AI tools, traditional development or both. We start with a health check, tell you plainly what is wrong, and fix what matters.</p>
+        <p class="actions">
+          <a class="btn" href="#contact">Request an application assessment</a>
+          <a class="btn btn--ghost" href="#how">See how we work</a>
+        </p>
+        <p class="built">Built for startups, small businesses, growing teams, AI-built apps and older systems.</p>
       </div>
     </section>
 
-    <!-- Services: cards pile up as you scroll -->
-    <section id="services" class="services on-black" aria-labelledby="services-title">
+    <!-- Services -->
+    <section id="services" class="block" aria-labelledby="services-title">
       <div class="wrap">
         <div class="section__head">
-          <h2 id="services-title" class="h2">What we take on</h2>
-          <p class="section__note">Twelve kinds of work. Most projects combine two or three. Ask the assistant for an instant estimate.</p>
+          <h2 id="services-title" class="h2">Where we help first</h2>
+          <p class="lead">Not sure where to begin? Start with the Application Health Check. It shows what is wrong, what matters most and what to fix first.</p>
         </div>
 
-        <ul class="stack">
-          <li class="card card--y">
-            <div class="card__head">
-              <h3>Manage your software</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27"/><path d="M10 33h12l6-14 8 28 6-14h12"/></svg>
-            </div>
-            <div class="card__body">
-              <p>We run it day to day: updates, monitoring, fixes and incident response, so your team can keep building instead of keeping the lights on.</p>
-              <ul class="chips" aria-label="Includes"><li>Updates</li><li>Monitoring</li><li>Incident response</li></ul>
+        <ul class="rows">
+          <li class="row row--lead">
+            <h3>Application Health Check</h3>
+            <div>
+              <p>Bring an application you have already built, with AI tools, developers or both. We review the architecture, code quality, dependencies, configuration and risks, and give you a prioritised report and roadmap.</p>
+              <ul class="chips" aria-label="Includes"><li>Architecture</li><li>Code quality</li><li>Dependencies</li><li>Risk report</li></ul>
+              <p class="actions"><a class="btn btn--sm" href="#contact">Request a health check</a></p>
             </div>
           </li>
-
-          <li class="card card--k">
-            <div class="card__head">
-              <h3>MCP servers</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="8"/><circle cx="10" cy="12" r="5"/><circle cx="54" cy="12" r="5"/><circle cx="32" cy="56" r="5"/><path d="M14 16l12 11M50 16L38 27M32 40v11"/></svg>
-            </div>
-            <div class="card__body">
-              <p>We build and host MCP servers that let AI assistants use your data and tools, with the access limits you set.</p>
-              <ul class="chips" aria-label="Includes"><li>Your data</li><li>Your tools</li><li>Access limits</li></ul>
+          <li class="row">
+            <h3>Code Review and Quality</h3>
+            <div>
+              <p>Cleaner, safer code that is easier to change. Manual and AI-assisted review, refactoring, better error handling, and tests that catch problems before your users do.</p>
+              <ul class="chips" aria-label="Includes"><li>Code review</li><li>Refactoring</li><li>Unit and integration tests</li></ul>
             </div>
           </li>
-
-          <li class="card card--y">
-            <div class="card__head">
-              <h3>Modernize your current software</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 32a24 24 0 0 1 42-16l6 6M56 8v14H42M56 32a24 24 0 0 1-42 16l-6-6M8 56V42h14"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Keep what works and replace what doesn't. Upgrade frameworks, structure and performance in steps, without pausing the business.</p>
-              <ul class="chips" aria-label="Includes"><li>Frameworks</li><li>Structure</li><li>Performance</li></ul>
+          <li class="row">
+            <h3>Security and Hardening</h3>
+            <div>
+              <p>Find and fix security gaps before someone else does: sign-in and access control, APIs, secrets, dependencies, headers and HTTPS. Done only on systems you own or have authorised in writing.</p>
+              <ul class="chips" aria-label="Includes"><li>Access control</li><li>API security</li><li>Secrets</li><li>Fixes and re-test</li></ul>
             </div>
           </li>
-
-          <li class="card card--k">
-            <div class="card__head">
-              <h3>Legacy to modern</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="20" width="20" height="24"/><path d="M29 32h12M36 26l6 6-6 6"/><circle cx="52" cy="32" r="10"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Move old desktop apps, on-premise servers and out-of-support stacks to current languages and the cloud, with your data intact.</p>
-              <ul class="chips" aria-label="Examples"><li>Desktop to web</li><li>On-premise to cloud</li><li>Old stack to current</li></ul>
+          <li class="row">
+            <h3>Performance Optimization</h3>
+            <div>
+              <p>Faster pages and APIs, measured before and after. We profile, find the real bottlenecks and fix them in the front end, back end and database.</p>
+              <ul class="chips" aria-label="Includes"><li>Profiling</li><li>Queries and APIs</li><li>Caching</li><li>Load tests</li></ul>
             </div>
           </li>
-
-          <li class="card card--y">
-            <div class="card__head">
-              <h3>AI bots inside your software, built secure</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 6l22 8v16c0 14-9 24-22 28C19 54 10 44 10 30V14z"/><path d="M22 32l7 7 14-15"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Add assistants and automation to your product with permissions, data privacy and abuse protection designed in from the start.</p>
-              <ul class="chips" aria-label="Includes"><li>Permissions</li><li>Data privacy</li><li>Abuse protection</li></ul>
+          <li class="row">
+            <h3>Production Readiness</h3>
+            <div>
+              <p>Tested, deployed, backed up and ready to launch. Environments, CI/CD, domain and SSL, backups, a rollback plan and basic monitoring, with a verified backup before anything goes live.</p>
+              <ul class="chips" aria-label="Includes"><li>QA</li><li>CI/CD</li><li>Backups and rollback</li><li>Monitoring</li></ul>
             </div>
           </li>
-
-          <li class="card card--k">
-            <div class="card__head">
-              <h3>Large refactors and system redesign with AI tools</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="6" width="22" height="22"/><rect x="36" y="6" width="22" height="22"/><rect x="6" y="36" width="52" height="22"/><path d="M28 17h8"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Untangle big codebases and redraw whole systems faster with AI-assisted analysis. A person reviews every change before it ships.</p>
-              <ul class="chips" aria-label="Includes"><li>Codebase analysis</li><li>System redesign</li><li>Human-reviewed changes</li></ul>
-            </div>
-          </li>
-
-          <li class="card card--y">
-            <div class="card__head">
-              <h3>Front-end design, small to large</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="6" y="46" width="10" height="10"/><rect x="6" y="30" width="26" height="26"/><rect x="6" y="6" width="52" height="50"/></svg>
-            </div>
-            <div class="card__body">
-              <p>From a single landing page to a full product interface, built and tested on phones and desktops.</p>
-              <ul class="chips" aria-label="Sizes"><li>Landing page</li><li>Dashboard</li><li>Full product</li></ul>
-            </div>
-          </li>
-
-          <li class="card card--k">
-            <div class="card__head">
-              <h3>Security audit and hardening</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="12" y="28" width="40" height="28" rx="4"/><path d="M20 28V20a12 12 0 0 1 24 0v8"/><circle cx="32" cy="42" r="3"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Find and fix security gaps in your application, cloud setup and AI features.</p>
-              <ul class="chips" aria-label="Includes"><li>Risk review</li><li>Fixes</li><li>Re-test</li></ul>
-            </div>
-          </li>
-
-          <li class="card card--y">
-            <div class="card__head">
-              <h3>Cloud migration and DevOps</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><path d="M18 46a12 12 0 0 1 2-23 16 16 0 0 1 30 5 9 9 0 0 1-2 18z"/><path d="M32 40V28M26 33l6-6 6 6"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Move to the cloud and set up reliable deployments, backups and monitoring.</p>
-              <ul class="chips" aria-label="Includes"><li>Deployments</li><li>Backups</li><li>Monitoring</li></ul>
-            </div>
-          </li>
-
-          <li class="card card--k">
-            <div class="card__head">
-              <h3>API and system integrations</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 22h38M38 14l8 8-8 8M56 42H18M26 34l-8 8 8 8"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Connect your software to payment, CRM, ERP and other systems.</p>
-              <ul class="chips" aria-label="Examples"><li>Payments</li><li>CRM</li><li>ERP</li></ul>
-            </div>
-          </li>
-
-          <li class="card card--y">
-            <div class="card__head">
-              <h3>Automated testing and quality</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="8" width="48" height="48" rx="6"/><path d="M17 23l5 5 9-10M17 42l5 5 9-10M38 24h12M38 43h12"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Automated tests so you can change software without breaking it.</p>
-              <ul class="chips" aria-label="Includes"><li>Critical paths</li><li>Browser tests</li><li>Quality reports</li></ul>
-            </div>
-          </li>
-
-          <li class="card card--k">
-            <div class="card__head">
-              <h3>Data pipelines and dashboards</h3>
-              <svg class="glyph" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="34" width="10" height="22"/><rect x="27" y="20" width="10" height="36"/><rect x="46" y="8" width="10" height="48"/></svg>
-            </div>
-            <div class="card__body">
-              <p>Bring your data together and show it in dashboards your team will use.</p>
-              <ul class="chips" aria-label="Includes"><li>Data sources</li><li>Dashboards</li><li>Alerts</li></ul>
+          <li class="row">
+            <h3>Continuous Engineering</h3>
+            <div>
+              <p>After launch, we keep it healthy: monitoring, maintenance, security updates and steady improvement, by email, with a written record of what changed.</p>
+              <ul class="chips" aria-label="Includes"><li>Monitoring</li><li>Maintenance</li><li>Security updates</li></ul>
             </div>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- How we work: yellow again -->
-    <section id="how" class="how on-yellow" aria-labelledby="how-title">
+    <!-- Also available -->
+    <section id="also" class="block block--tint" aria-labelledby="also-title">
       <div class="wrap">
         <div class="section__head">
-          <h2 id="how-title" class="h2">Everything happens by email</h2>
-          <p class="section__note">No portal to learn and no forms to fill in.</p>
+          <h2 id="also-title" class="h2">Also available</h2>
+          <p class="lead">The rest of what we take on. Most projects combine two or three of these with the services above.</p>
         </div>
-        <ol class="steps">
-          <li>
-            <h3>You write to us</h3>
-            <p>Describe what you run, what hurts and when it needs to be fixed. Rough notes are fine.</p>
-          </li>
-          <li>
-            <h3>We reply with a plan</h3>
-            <p>You get questions, a written scope and a price, so you know what you are agreeing to.</p>
-          </li>
-          <li>
-            <h3>We do the work</h3>
-            <p>Progress, decisions and hand-over notes arrive in the same thread, where you can find them later.</p>
-          </li>
-        </ol>
+        <ul class="also__grid">
+          <li><h3>Software testing and QA</h3><p>Manual and automated, API, regression, cross-browser and user acceptance testing.</p></li>
+          <li><h3>Monitoring and reliability</h3><p>Error tracking, logging, uptime alerts, backups, recovery planning and root cause analysis.</p></li>
+          <li><h3>Maintenance and modernization</h3><p>Framework and runtime upgrades, technical debt, database and API modernization.</p></li>
+          <li><h3>Legacy to modern</h3><p>Move old desktop apps, on-premise servers and out-of-support stacks to current languages and the cloud.</p></li>
+          <li><h3>Manage your software</h3><p>We run it day to day: updates, monitoring, fixes and incident response.</p></li>
+          <li><h3>Large refactors with AI tools</h3><p>Untangle big codebases and redesign systems with AI-assisted analysis. A person reviews every change.</p></li>
+          <li><h3>AI integration and MCP servers</h3><p>Assistants and automation inside your product, and MCP servers for your data and tools, built secure.</p></li>
+          <li><h3>API and system integration</h3><p>Connect your software to payment, CRM, ERP and other systems.</p></li>
+          <li><h3>Custom software and cloud apps</h3><p>Business tools, internal systems and SaaS applications.</p></li>
+          <li><h3>Websites and front-end design</h3><p>From a landing page to a full product interface, tested on phones and desktops.</p></li>
+          <li><h3>Data pipelines and dashboards</h3><p>Bring your data together and show it in dashboards your team will use.</p></li>
+          <li><h3>Cloud migration and DevOps</h3><p>Move to the cloud with reliable deployments, backups and monitoring.</p></li>
+        </ul>
       </div>
     </section>
 
-    <!-- Contact: black, the address is the button -->
-    <section id="contact" class="contact on-black" aria-labelledby="contact-title">
+    <!-- How we work -->
+    <section id="how" class="block" aria-labelledby="how-title">
       <div class="wrap">
-        <h2 id="contact-title" class="contact__title">Start with an email</h2>
-        <a class="mail" href="mailto:admin.qenbel@gmail.com?subject=Project%20enquiry&amp;body=What%20do%20you%20run%20today%3F%0A%0AWhat%20needs%20to%20change%3F%0A%0AAny%20deadline%3F">admin.qenbel@gmail.com</a>
-        <p class="contact__note">Tell us what you run, what needs to change and any deadline. We reply by email.</p>
+        <div class="section__head">
+          <h2 id="how-title" class="h2">How we work</h2>
+          <p class="lead">Everything happens by email, so there is a written record of every decision. No portal to learn.</p>
+        </div>
+        <ol class="steps">
+          <li><h3>Enquiry</h3><p>You tell us about the application, your goal and the problems you see today.</p></li>
+          <li><h3>Technical discovery</h3><p>We review the stack, code, architecture and the access you approve.</p></li>
+          <li><h3>Assessment</h3><p>We find the quality, security, performance and reliability issues.</p></li>
+          <li><h3>Proposal</h3><p>You get the scope, priorities, timeline, cost and deliverables in writing.</p></li>
+          <li><h3>Implementation</h3><p>Code improvements, security fixes, testing and infrastructure work.</p></li>
+          <li><h3>Validation</h3><p>We verify function, quality, performance, security controls and readiness.</p></li>
+          <li><h3>Release</h3><p>Deployed with a verified backup, rollback arrangements and monitoring.</p></li>
+          <li><h3>Support</h3><p>Maintenance, updates, monitoring and continued improvement.</p></li>
+        </ol>
+        <p class="safety"><strong>Our safety rule.</strong> We work only with your written authorisation, in isolated environments with least-privilege access. We never change your production system without a verified backup, testing and your release approval. <a href="/compliance.html">Read how we handle compliance</a>.</p>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="block contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <h2 id="contact-title" class="h2">Request an application assessment</h2>
+        <a class="mail" href="mailto:admin.qenbel@gmail.com?subject=Application%20assessment%20request&amp;body=What%20is%20the%20application%20and%20what%20does%20it%20do%3F%0A%0AHow%20was%20it%20built%20(AI%20tools%2C%20developers%2C%20both)%3F%0A%0AWhat%20worries%20you%20most%3F%0A%0AAny%20deadline%3F">admin.qenbel@gmail.com</a>
+        <p class="lead">Tell us what the application is, how it was built and what worries you. Please do not include passwords, keys or customer data in the first email. We reply by email.</p>
         <p class="actions">
-          <a class="btn" href="mailto:admin.qenbel@gmail.com?subject=Project%20enquiry&amp;body=What%20do%20you%20run%20today%3F%0A%0AWhat%20needs%20to%20change%3F%0A%0AAny%20deadline%3F">Open in your email app</a>
-          <button class="btn btn--ghost" type="button" data-copy="admin.qenbel@gmail.com">Copy address</button>
+          <a class="btn btn--white" href="mailto:admin.qenbel@gmail.com?subject=Application%20assessment%20request&amp;body=What%20is%20the%20application%20and%20what%20does%20it%20do%3F%0A%0AHow%20was%20it%20built%20(AI%20tools%2C%20developers%2C%20both)%3F%0A%0AWhat%20worries%20you%20most%3F%0A%0AAny%20deadline%3F">Open in your email app</a>
+          <button class="btn btn--outline" type="button" data-copy="admin.qenbel@gmail.com">Copy address</button>
         </p>
         <p class="sr-only" data-copy-status role="status" aria-live="polite"></p>
       </div>
-
-      <footer class="foot wrap">
-        <span>&copy; <span data-year>2026</span> QenBel</span>
-        <span>qenbel.site</span>
-      </footer>
-      <div class="wordmark wordmark--foot" aria-hidden="true">
-        <span class="wordmark__text">QenBel</span>
-      </div>
     </section>
   </main>
+
+  <footer class="site-foot">
+    <div class="wrap site-foot__grid">
+      <div class="site-foot__brand">
+        <a class="logo" href="/" aria-label="QenBel home">QenBel</a>
+        <p>Software engineering, security and production readiness. We work by email.</p>
+      </div>
+      <nav aria-label="Company">
+        <h2>Company</h2>
+        <ul>
+          <li><a href="/about.html">About QenBel</a></li>
+          <li><a href="/#how">How we work</a></li>
+          <li><a href="mailto:admin.qenbel@gmail.com">admin.qenbel@gmail.com</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Documents">
+        <h2>Documents</h2>
+        <ul>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Use</a></li>
+          <li><a href="/compliance.html">Compliance and Regulation</a></li>
+          <li><a href="mailto:admin.qenbel@gmail.com?subject=Security%20report">Report a security issue</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="wrap site-foot__base">&copy; 2026 QenBel</div>
+  </footer>
 
   <a class="chat-launcher" href="/chat.html" aria-label="Ask the QenBel assistant">
     <span class="orb" data-orb aria-hidden="true"></span>
