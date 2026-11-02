@@ -38,6 +38,16 @@ export function cleanHistory(input, keep) {
   return kept;
 }
 
+// The model asks for the contact card by ending its reply with [[contact]]. The marker is removed
+// before the reply is signed or shown; the card is also offered whenever the reply names the team email.
+export function splitContact(text, teamEmail) {
+  const raw = String(text ?? "");
+  const marked = /\[\[\s*contact\s*\]\]/i.test(raw);
+  const reply = raw.replace(/\[\[\s*contact\s*\]\]/gi, "");
+  const named = reply.toLowerCase().includes(String(teamEmail).toLowerCase());
+  return { reply, contact: marked || named };
+}
+
 // Replies are plain text for people. Strip anything that could carry a phishing link or a
 // look-alike address if the model were ever talked into writing one.
 export function sanitizeReply(text, teamEmail) {

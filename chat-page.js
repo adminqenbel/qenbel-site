@@ -1,6 +1,6 @@
 /* QenBel assistant page.
    Conversations are saved in this browser only (localStorage).
-   Nothing reaches the team until the visitor emails it themselves from the "Email the team" bar. */
+   Nothing reaches the team until the visitor emails it themselves from the contact card the assistant shows when it is relevant. */
 (function () {
   "use strict";
 
@@ -89,6 +89,7 @@
     var body = el("div", "m__body");
     m.content.split(/\n{2,}/).forEach(function (p) { if (p.trim()) body.appendChild(el("p", null, p.trim())); });
     row.appendChild(body);
+    if (!user && m.contact === true && !m.error) body.appendChild(contactCard(m));
     thread.appendChild(row);
     return row;
   }
@@ -106,13 +107,14 @@
 
   /* ---------- email the team: opens the visitor's own email, nothing goes through our servers ---------- */
 
-  var mailbar = $("[data-mailbar]"), mailBtns = $("[data-mailbtns]");
   function enc(s) { return encodeURIComponent(s); }
 
-  function draft() {
+  // The chat up to and including message m, as a starting point for the email.
+  function draft(m) {
+    var msgs = current().messages, at = msgs.indexOf(m);
     var out = ["Hello QenBel team,", "", "I was chatting with the assistant on qenbel.site and would like to follow up by email.", "", "My message:", "", "[Write what you need here]", "", "-----", "Chat so far (for reference):"];
-    current().messages.filter(function (m) { return !m.error; }).slice(-8).forEach(function (m) {
-      out.push((m.role === "user" ? "Me: " : "Assistant: ") + m.content.replace(/\s+/g, " ").slice(0, 280));
+    msgs.slice(0, at < 0 ? msgs.length : at + 1).filter(function (x) { return !x.error; }).slice(-8).forEach(function (x) {
+      out.push((x.role === "user" ? "Me: " : "Assistant: ") + x.content.replace(/\s+/g, " ").slice(0, 280));
     });
     out.push("", "Thank you");
     var body = out.join("\r\n");
@@ -120,20 +122,21 @@
     return { to: TEAM, subject: "Enquiry from the qenbel.site assistant", body: body };
   }
 
-  function renderMailbar() {
-    var has = current().messages.some(function (m) { return m.role === "user"; });
-    mailbar.hidden = !has;
-    mailBtns.textContent = "";
-    if (!has) return;
-    var d = draft();
+  // Shown inside the conversation only under replies where the assistant points the visitor to the team.
+  function contactCard(m) {
+    var d = draft(m);
+    var card = el("div", "mailcard");
+    card.appendChild(el("strong", null, "Email the QenBel team"));
+    card.appendChild(el("span", null, "Opens your own email with this chat attached for reference. Nothing is sent until you press Send there. Do not include passwords or keys."));
+    var btns = el("div", "mailcard__btns");
     function link(label, href, cls, external) {
       var a = el("a", cls, label); a.href = href;
       if (external) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
       return a;
     }
-    mailBtns.appendChild(link("Open in Gmail", "https://mail.google.com/mail/?view=cm&fs=1&to=" + enc(d.to) + "&su=" + enc(d.subject) + "&body=" + enc(d.body), "mb mb--main", true));
-    mailBtns.appendChild(link("Email app", "mailto:" + d.to + "?subject=" + enc(d.subject) + "&body=" + enc(d.body), "mb", false));
-    mailBtns.appendChild(link("Outlook", "https://outlook.live.com/mail/0/deeplink/compose?to=" + enc(d.to) + "&subject=" + enc(d.subject) + "&body=" + enc(d.body), "mb", true));
+    btns.appendChild(link("Open in Gmail", "https://mail.google.com/mail/?view=cm&fs=1&to=" + enc(d.to) + "&su=" + enc(d.subject) + "&body=" + enc(d.body), "mb mb--main", true));
+    btns.appendChild(link("Email app", "mailto:" + d.to + "?subject=" + enc(d.subject) + "&body=" + enc(d.body), "mb", false));
+    btns.appendChild(link("Outlook", "https://outlook.live.com/mail/0/deeplink/compose?to=" + enc(d.to) + "&subject=" + enc(d.subject) + "&body=" + enc(d.body), "mb", true));
     var copy = el("button", "mb", "Copy details"); copy.type = "button";
     copy.addEventListener("click", function () {
       var text = "To: " + d.to + "\nSubject: " + d.subject + "\n\n" + d.body;
@@ -141,7 +144,9 @@
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, function () { copy.textContent = "Copy failed"; });
       else copy.textContent = "Copy failed";
     });
-    mailBtns.appendChild(copy);
+    btns.appendChild(copy);
+    card.appendChild(btns);
+    return card;
   }
 
   /* ---------- sidebar ---------- */
@@ -175,7 +180,7 @@
     var has = cur.messages.length > 0;
     empty.hidden = has; thread.hidden = !has;
     if (!emptyOrb) emptyOrb = orb($("[data-empty-orb]"), "idle");
-    renderList(); renderMailbar();
+    renderList();
     if (has) scrollDown(); else scroller.scrollTop = 0;
   }
 
@@ -225,7 +230,6 @@
     cur.messages = cur.messages.slice(-MAX_MSGS);
     save();
     if (first) { empty.hidden = true; thread.hidden = false; renderList(); }
-    renderMailbar();
     renderMessage(cur.messages[cur.messages.length - 1]);
     box.value = ""; autosize();
     setBusy(true); showThinking();
@@ -237,8 +241,8 @@
       .then(function (r) {
         hideThinking();
         if (!r.ok || !r.data.reply) throw new Error(r.data.message || "unavailable");
-        var msg = { role: "assistant", content: r.data.reply, sig: r.data.sig };
-        cur.messages.push(msg); save(); renderMessage(msg); renderMailbar();
+        var msg = { role: "assistant", content: r.data.reply, sig: r.data.sig, contact: r.data.contact === true };
+        cur.messages.push(msg); save(); renderMessage(msg);
       })
       .catch(function (err) {
         hideThinking();

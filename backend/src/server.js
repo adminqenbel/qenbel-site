@@ -2,7 +2,7 @@ import express from "express";
 import { config } from "./config.js";
 import { askGemini, GeminiError } from "./gemini.js";
 import { cors, dailyBudget, rateLimiter, secureHeaders } from "./security.js";
-import { cleanHistory, historySecretIsEphemeral, sanitizeReply, sign } from "./history.js";
+import { cleanHistory, historySecretIsEphemeral, sanitizeReply, sign, splitContact } from "./history.js";
 
 const app = express();
 app.set("trust proxy", config.trustProxy);
@@ -30,8 +30,9 @@ app.post("/api/chat", perMinute, perDay, async (req, res) => {
   }
   try {
     const { reply } = await askGemini(messages);
-    const safeReply = sanitizeReply(reply, config.teamEmail) || "Sorry, I could not put that into words. Could you rephrase?";
-    res.json({ reply: safeReply, sig: sign(safeReply) });
+    const parts = splitContact(reply, config.teamEmail);
+    const safeReply = sanitizeReply(parts.reply, config.teamEmail) || "Sorry, I could not put that into words. Could you rephrase?";
+    res.json({ reply: safeReply, sig: sign(safeReply), contact: parts.contact });
   } catch (e) {
     console.error("chat failed:", e instanceof GeminiError ? `${e.message}` : e?.name);
     const busy = e instanceof GeminiError && (e.status === 429 || e.status >= 500);

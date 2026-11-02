@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 
 process.env.HISTORY_SECRET = "test-secret-not-used-anywhere-else";
 
-const { sanitizeReply, cleanHistory, sign, verify } = await import("../src/history.js");
+const { sanitizeReply, splitContact, cleanHistory, sign, verify } = await import("../src/history.js");
 const { dailyBudget, keyedLimit, clientKey } = await import("../src/security.js");
 const { systemPrompt } = await import("../src/prompt.js");
 
@@ -60,4 +60,12 @@ test("client address: the trusted header wins, junk falls back, and no header me
   assert.equal(clientKey(req({ "cf-connecting-ip": "not-an-ip<script>" }), "cf-connecting-ip"), "10.0.0.1");
   assert.equal(clientKey(req({ "cf-connecting-ip": "203.0.113.9" }), ""), "10.0.0.1"); // header ignored unless configured
   assert.equal(clientKey(req({}), "cf-connecting-ip"), "10.0.0.1");
+});
+
+test("contact card: marker is removed from the reply and only turns the card on", () => {
+  const t = "admin.qenbel@gmail.com";
+  assert.deepEqual(splitContact("Email the team with a short description.\n[[contact]]", t), { reply: "Email the team with a short description.\n", contact: true });
+  assert.equal(splitContact("In Python: text[::-1].", t).contact, false);
+  assert.equal(splitContact("Write to admin.qenbel@gmail.com.", t).contact, true);
+  assert.ok(!/contact\]\]/i.test(splitContact("hi [[ Contact ]] there", t).reply));
 });
