@@ -103,9 +103,10 @@ textarea, input { font: inherit; color: inherit; }
 .mailcard > span { display: block; margin-top: 0.15rem; font-size: 0.85rem; line-height: 1.45; color: var(--ink-2); }
 .mailcard__btns { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.65rem; }
 .mb { display: inline-flex; align-items: center; justify-content: center; min-height: 2.4rem; padding: 0.4rem 0.95rem; font-size: 0.88rem; font-weight: 500; color: var(--blue); text-decoration: none; background: #fff; border: 1.5px solid var(--blue); border-radius: 999px; }
-.mb:hover { color: #fff; background: var(--blue); }
-.mb--main { color: #fff; background: var(--blue); }
-.mb--main:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+.m__body .mb { color: var(--blue); }
+.mb:hover, .m__body .mb:hover { color: #fff; background: var(--blue); }
+.mb--main, .m__body .mb--main { color: #fff; background: var(--blue); }
+.mb--main:hover, .m__body .mb--main:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
 
 /* ---------- Small screens: sidebar becomes a drawer ---------- */
 

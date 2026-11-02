@@ -69,3 +69,7 @@ test("contact card: marker is removed from the reply and only turns the card on"
   assert.equal(splitContact("Write to admin.qenbel@gmail.com.", t).contact, true);
   assert.ok(!/contact\]\]/i.test(splitContact("hi [[ Contact ]] there", t).reply));
 });
+
+test("reply: code fence lines are dropped, the code itself stays", () => {
+  assert.equal(sanitizeReply("Here:\n```python\ntext = 'hi'\nprint(text[::-1])\n```\nDone.", "a@b.co"), "Here:\ntext = 'hi'\nprint(text[::-1])\nDone.");
+});

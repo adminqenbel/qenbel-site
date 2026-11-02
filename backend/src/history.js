@@ -56,6 +56,7 @@ export function sanitizeReply(text, teamEmail) {
     .replace(/\[([^\]]{0,200})\]\([^)]{0,500}\)/g, "$1")
     .replace(/\*\*([^*\n]{1,200})\*\*/g, "$1") // the chat shows plain text, so drop markdown bold
     .replace(/(^|\s)\*([^*\s][^*\n]{0,200}?)\*(?=\s|[.,;:!?]|$)/g, "$1$2")
+    .replace(/^[ \t]*```[a-z0-9+#-]*[ \t]*$\n?/gim, "") // the chat shows plain text, so drop code fence lines
     .replace(/`([^`\n]{1,200})`/g, "$1")
     .replace(/^#{1,6}\s+/gm, "")
     .replace(/\b(?:https?:\/\/|ftp:\/\/|www\.)[^\s<>"')]+/gi, "[link removed]")
