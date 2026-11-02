@@ -45,7 +45,9 @@ export function splitContact(text, teamEmail) {
   const marked = /\[\[\s*contact\s*\]\]/i.test(raw);
   const reply = raw.replace(/\[\[\s*contact\s*\]\]/gi, "");
   const named = reply.toLowerCase().includes(String(teamEmail).toLowerCase());
-  return { reply, contact: marked || named };
+  // A reply that is only asking a follow-up question is not the moment for the card.
+  const asking = !named && /\?\s*$/.test(reply);
+  return { reply, contact: (marked || named) && !asking };
 }
 
 // Replies are plain text for people. Strip anything that could carry a phishing link or a

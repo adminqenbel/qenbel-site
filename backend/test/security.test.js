@@ -73,3 +73,10 @@ test("contact card: marker is removed from the reply and only turns the card on"
 test("reply: code fence lines are dropped, the code itself stays", () => {
   assert.equal(sanitizeReply("Here:\n```python\ntext = 'hi'\nprint(text[::-1])\n```\nDone.", "a@b.co"), "Here:\ntext = 'hi'\nprint(text[::-1])\nDone.");
 });
+
+test("contact card: a reply that only asks a question gets no card, even with the marker", () => {
+  const t = "admin.qenbel@gmail.com";
+  assert.equal(splitContact("What would you like to migrate?
+[[contact]]", t).contact, false);
+  assert.equal(splitContact("Email admin.qenbel@gmail.com. Anything else?", t).contact, true);
+});
