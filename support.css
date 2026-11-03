@@ -1,0 +1,37 @@
+/* Support page. Builds on theme.css (tokens, nav, buttons, footer) and legal.css (document layout). */
+
+.sform { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.25rem; margin-top: 1rem; }
+.field { grid-column: 1 / -1; display: grid; gap: 0.35rem; align-content: start; }
+.field--half { grid-column: span 1; }
+.sform label { font-weight: 600; font-size: 0.95rem; }
+.opt { font-weight: 400; color: var(--ink-2); }
+
+.sform input[type="text"], .sform select, .sform textarea {
+  width: 100%; padding: 0.7rem 0.9rem; font: inherit; color: var(--ink); background: #fff;
+  border: 1.5px solid var(--hair); border-radius: 10px;
+}
+.sform textarea { resize: vertical; min-height: 9rem; line-height: 1.55; }
+.sform select { appearance: none; padding-right: 2.4rem; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23071A44' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 0.8rem center / 1.1rem; }
+.sform input:hover, .sform select:hover, .sform textarea:hover { border-color: rgba(7, 26, 68, 0.35); }
+.sform input:focus-visible, .sform select:focus-visible, .sform textarea:focus-visible { outline: 3px solid var(--blue); outline-offset: 1px; border-color: var(--blue); }
+
+.hint { font-size: 0.88rem; color: var(--ink-2); }
+.count { font-size: 0.82rem; color: var(--ink-2); text-align: right; }
+.check { grid-column: 1 / -1; display: flex; align-items: center; gap: 0.6rem; font-weight: 500 !important; }
+.check input { width: 1.15rem; height: 1.15rem; accent-color: var(--blue); }
+.sform .note { grid-column: 1 / -1; margin-top: 0; }
+
+.out { grid-column: 1 / -1; padding: 1rem 1.1rem; background: var(--pale); border-left: 3px solid var(--blue); }
+.out h3 { font-weight: 600; font-size: 1.05rem; }
+.out__btns { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
+.mb { display: inline-flex; align-items: center; justify-content: center; min-height: 2.5rem; padding: 0.4rem 1rem; font-size: 0.9rem; font-weight: 500; color: var(--blue); text-decoration: none; background: #fff; border: 1.5px solid var(--blue); border-radius: 999px; }
+.doc .mb { color: var(--blue); text-decoration: none; }
+.doc .mb:hover { color: #fff; background: var(--blue); }
+.doc .mb--main { color: #fff; background: var(--blue); }
+.doc .mb--main:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
+.preview { margin: 0.9rem 0 0; padding: 0.8rem 0.9rem; max-height: 16rem; overflow: auto; font: 0.85rem/1.5 ui-monospace, "SFMono-Regular", Consolas, monospace; color: var(--ink-2); white-space: pre-wrap; overflow-wrap: anywhere; background: #fff; border: 1px solid var(--hair); }
+
+@media (max-width: 40rem) {
+  .sform { grid-template-columns: 1fr; }
+  .field--half { grid-column: 1 / -1; }
+}
