@@ -43,3 +43,6 @@ td:first-child { color: var(--ink); font-weight: 600; min-width: 11rem; }
 
 @media (max-width: 40rem) { .facts > div { grid-template-columns: 1fr; gap: 0.1rem; } }
 @media print { .nav, .skip, .site-foot { display: none; } }
+
+/* Draft placeholders: values that must be confirmed before a document page is published. */
+.tbc { padding: 0.05em 0.35em; color: var(--ink); background: #FFF1B8; border-radius: 4px; }
