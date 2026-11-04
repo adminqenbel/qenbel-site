@@ -82,7 +82,8 @@ test("acknowledgements: carry the reference, plain text, no prices, no delivery 
 
 test("search: only mail sent to our own addresses is looked at, never the rest of the inbox", () => {
   const q = g.buildSearch(C);
-  assert.ok(q.startsWith("in:inbox is:unread"));
+  assert.ok(q.startsWith("in:inbox"));
+  assert.ok(!q.includes("is:unread"));   // handled mail is tracked by label, so reading a message early does not hide it
   assert.ok(q.includes("-label:qenbel-processed"));
   for (const n of ["support", "contact", "info", "admin"]) {
     assert.ok(q.includes(`to:${n}@qenbel.site`), n);

@@ -6,7 +6,7 @@ Mail path: `support@ / info@ / admin@ / contact@qenbel.site` -> ImprovMX -> Gmai
 
 ## What it does
 
-Every 5 minutes, for new unread mail in the inbox:
+Every 5 minutes, for new mail in the inbox (handled mail gets a hidden `qenbel-processed` label, so it makes no difference whether you have already opened a message):
 
 | Step | Detail |
 | --- | --- |
@@ -29,7 +29,7 @@ It never replies to: no-reply or bounce senders, mailing lists, auto-replies, yo
 2. Replace the default code with the contents of `Code.gs`. Name the project "QenBel mailbox".
 3. Select the function `setup` and press **Run**. Google asks you to authorise. It says the app is unverified because it is your own script: choose Advanced, then continue. `setup` checks the send-as address, creates the labels and installs the 5 minute trigger.
 4. **Dry run first.** `DRY_RUN` is `true`, so nothing is sent or labelled yet. From another email account, send a test to `support@qenbel.site`. Wait for the mail to arrive, then select `processInbox`, press **Run**, and open **Executions** to read the log. Each line says what it would do.
-5. When the log looks right, change `DRY_RUN: true` to `DRY_RUN: false` and save. The next run sends real acknowledgements. Test again with another account and check you receive the reply from `contact@qenbel.site`.
+5. When the log looks right, change `DRY_RUN: true` to `DRY_RUN: false` and save. The next run records the moment you went live. Mail that arrived before that moment is marked as handled and never acknowledged. Every new conversation after it gets the acknowledgement. Test again with another account and check you receive the reply from `contact@qenbel.site`.
 
 ## Stop it
 

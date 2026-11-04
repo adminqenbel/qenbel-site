@@ -29,7 +29,9 @@ var CONFIG = {
 
   // The search is narrowed to mail addressed to our own addresses (see buildSearch), so personal
   // mail in the same inbox is never read, labelled or counted against MAX_THREADS_PER_RUN.
-  SEARCH_BASE: 'in:inbox is:unread newer_than:2d -label:qenbel-processed',
+  // Handled mail is tracked with the qenbel-processed label, not with read/unread, so opening a message
+  // before the next run does not make the script miss it.
+  SEARCH_BASE: 'in:inbox newer_than:2d -label:qenbel-processed',
   MAX_THREADS_PER_RUN: 20,
   MAX_ACKS_PER_DAY: 50,                // Gmail limits how many emails a script may send each day
   ACK_PER_SENDER_HOURS: 24,
@@ -173,6 +175,16 @@ function processInbox() {
   try {
     var processed = labelNamed_(CONFIG.PROCESSED_LABEL);
     var state = loadState_();
+
+    // The first live run records the moment of going live. Mail that arrived before it is only marked
+    // as handled, never acknowledged, so nobody gets a late automatic reply to an old message.
+    var props = PropertiesService.getScriptProperties();
+    var liveSince = Number(props.getProperty('liveSince') || 0);
+    if (!CONFIG.DRY_RUN && !liveSince) {
+      liveSince = Date.now();
+      props.setProperty('liveSince', String(liveSince));
+      log_('going live: mail older than now will be marked handled without a reply');
+    }
     var threads = GmailApp.search(buildSearch(CONFIG), 0, CONFIG.MAX_THREADS_PER_RUN);
     log_('found ' + threads.length + ' new conversation(s)');
 
@@ -187,6 +199,13 @@ function processInbox() {
 
       // Not addressed to one of our addresses (the search is only a first filter): leave it completely alone.
       if (!aliases.length) { log_('skipped, not sent to one of our addresses: "' + subject + '"'); continue; }
+
+      // Arrived before going live: mark handled and do nothing else.
+      if (!CONFIG.DRY_RUN && liveSince && last.getDate().getTime() < liveSince) {
+        thread.addLabel(processed);
+        log_('skipped, arrived before going live: "' + subject + '"');
+        continue;
+      }
 
       // Mark as handled first: if anything below fails or times out, nothing is sent twice.
       if (!CONFIG.DRY_RUN) thread.addLabel(processed);
