@@ -24,9 +24,9 @@ test("history: forged or edited assistant turns are dropped, genuine ones kept",
 });
 
 test("reply: links, markdown links and foreign addresses are stripped; the team address stays", () => {
-  const r = sanitizeReply("Pay at https://evil.test/pay or [click](http://x.test) or www.bad.com/x, mail attacker@evil.test or admin.qenbel@gmail.com", "admin.qenbel@gmail.com");
+  const r = sanitizeReply("Pay at https://evil.test/pay or [click](http://x.test) or www.bad.com/x, mail attacker@evil.test or contact@qenbel.site", "contact@qenbel.site");
   assert.doesNotMatch(r, /evil\.test|x\.test|bad\.com/);
-  assert.match(r, /admin\.qenbel@gmail\.com/);
+  assert.match(r, /contact@qenbel\.site/);
   assert.match(r, /\[link removed\]/);
   assert.match(r, /\[email removed\]/);
 });
@@ -36,10 +36,10 @@ test("reply: markdown emphasis is removed so the chat shows plain text", () => {
 });
 
 test("prompt: the assistant is told never to give prices and carries no price data", () => {
-  const p = systemPrompt("admin.qenbel@gmail.com");
+  const p = systemPrompt("contact@qenbel.site");
   assert.match(p, /do not give prices/);
   assert.doesNotMatch(p, /[$₹€£]\s?\d|\bUSD\b|\bINR\b|per hour|\/month/i);
-  assert.match(p, /admin\.qenbel@gmail\.com/);
+  assert.match(p, /contact@qenbel\.site/);
   assert.match(p, /Hemapriyan R K/);
 });
 
@@ -63,10 +63,10 @@ test("client address: the trusted header wins, junk falls back, and no header me
 });
 
 test("contact card: marker is removed from the reply and only turns the card on", () => {
-  const t = "admin.qenbel@gmail.com";
+  const t = "contact@qenbel.site";
   assert.deepEqual(splitContact("Email the team with a short description.\n[[contact]]", t), { reply: "Email the team with a short description.\n", contact: true });
   assert.equal(splitContact("In Python: text[::-1].", t).contact, false);
-  assert.equal(splitContact("Write to admin.qenbel@gmail.com.", t).contact, true);
+  assert.equal(splitContact("Write to contact@qenbel.site.", t).contact, true);
   assert.ok(!/contact\]\]/i.test(splitContact("hi [[ Contact ]] there", t).reply));
 });
 
@@ -75,7 +75,7 @@ test("reply: code fence lines are dropped, the code itself stays", () => {
 });
 
 test("contact card: a reply that only asks a question gets no card, even with the marker", () => {
-  const t = "admin.qenbel@gmail.com";
+  const t = "contact@qenbel.site";
   assert.equal(splitContact("What would you like to migrate?\n[[contact]]", t).contact, false);
-  assert.equal(splitContact("Email admin.qenbel@gmail.com. Anything else?", t).contact, true);
+  assert.equal(splitContact("Email contact@qenbel.site. Anything else?", t).contact, true);
 });

@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var TEAM = "admin.qenbel@gmail.com";
+  var TEAM = "contact@qenbel.site";
   var MAX_BODY = 1800; /* keeps the link short enough for every email app */
 
   var TYPES = {

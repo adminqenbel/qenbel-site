@@ -10,7 +10,7 @@ Landing page and assistant for [qenbel.site](https://qenbel.site).
 | Legal pages | `privacy.html`, `terms.html`, `compliance.html`, `legal.css` | Vercel |
 | What the assistant knows about QenBel | `backend/src/prompt.js` | with the API |
 
-Contact is email only: admin.qenbel@gmail.com
+Contact is email only: contact@qenbel.site
 
 ## Run it locally
 

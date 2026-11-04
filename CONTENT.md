@@ -1,7 +1,7 @@
 # QenBel: positioning and content (as built)
 
 This is the source of truth for the wording on `index.html` and in `backend/src/prompt.js`. Change it here first, then in those two places.
-Brand is always written **QenBel**. Contact is email only: admin.qenbel@gmail.com. The site and assistant never state prices.
+Brand is always written **QenBel**. Contact is email only: contact@qenbel.site. The site and assistant never state prices.
 
 ## Positioning
 - Company line: QenBel: software engineering, security and production readiness.
@@ -24,7 +24,7 @@ Software testing and QA; monitoring and reliability; maintenance and modernizati
 Enquiry, technical discovery, assessment, proposal, implementation, validation, release, support. All by email.
 
 ## About
-Founder: Hemapriyan R K. Company: QenBel. Website: qenbel.site. Contact: admin.qenbel@gmail.com. Communication by email only. Nothing else is stated until it is confirmed (team, location, years, clients).
+Founder: Hemapriyan R K. Company: QenBel. Website: qenbel.site. Contact: contact@qenbel.site. Communication by email only. Nothing else is stated until it is confirmed (team, location, years, clients).
 
 ## Assistant rules
 - Answers on behalf of QenBel about services, process and where to start.

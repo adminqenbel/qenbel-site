@@ -26,7 +26,7 @@ app.post("/api/chat", perMinute, perDay, async (req, res) => {
   }
   // Only a request that will really call Gemini spends from the daily budget.
   if (!budget.take()) {
-    return res.status(503).json({ error: "busy", message: "The assistant is busy today. Please email admin.qenbel@gmail.com instead." });
+    return res.status(503).json({ error: "busy", message: "The assistant is busy today. Please email contact@qenbel.site instead." });
   }
   try {
     const { reply } = await askGemini(messages);
@@ -38,7 +38,7 @@ app.post("/api/chat", perMinute, perDay, async (req, res) => {
     const busy = e instanceof GeminiError && (e.status === 429 || e.status >= 500);
     res.status(busy ? 503 : 502).json({
       error: "assistant_unavailable",
-      message: "The assistant could not answer just now. You can email admin.qenbel@gmail.com instead.",
+      message: "The assistant could not answer just now. You can email contact@qenbel.site instead.",
     });
   }
 });

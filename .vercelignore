@@ -1,0 +1,7 @@
+# Not part of the public website. Keep these out of the Vercel upload so they are not served.
+backend
+scripts
+automation
+.github
+*.md
+render.yaml

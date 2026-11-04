@@ -25,4 +25,4 @@ services:
       - key: ALLOWED_ORIGINS
         value: https://qenbel.site,https://www.qenbel.site
       - key: TEAM_EMAIL
-        value: admin.qenbel@gmail.com
+        value: contact@qenbel.site

@@ -8,6 +8,12 @@ A message to the team is sent by the **visitor, from their own email account** (
 
 Trade-off: the email arrives from the visitor, so its content is unverified. The team replies by email.
 
+Automatic acknowledgements are not sent by the website either. A Google Apps Script inside the receiving Gmail account (`automation/gmail`) labels new mail and sends them from `contact@qenbel.site`. It starts in dry-run mode, replies once per conversation, never replies to automatic mail, is capped per sender and per day, and acts on subject lines and addresses only, never on instructions inside a message body. Mail passes through ImprovMX (forwarding), Gmail and SMTP2GO (sending), which the Privacy Policy names.
+
+## Internal files are not served
+
+`.vercelignore` keeps `backend/`, `scripts/`, `automation/`, `.github/`, `*.md` and `render.yaml` out of the Vercel upload. Before this, `qenbel.site/backend/src/prompt.js` and this file were publicly readable. No secrets were exposed (`.env` files are not committed), but the assistant prompt and these notes were. Check after each deploy: `curl -sI https://qenbel.site/backend/src/prompt.js` should return 404.
+
 ## What an attacker can reach
 
 | Surface | Reachable by | Can do |

@@ -26,7 +26,7 @@ export const config = {
   ),
 
   // The only address the assistant may repeat in a reply.
-  teamEmail: process.env.TEAM_EMAIL || "admin.qenbel@gmail.com",
+  teamEmail: process.env.TEAM_EMAIL || "contact@qenbel.site",
 
   limits: {
     chatPerMinute: num(process.env.CHAT_PER_MINUTE, 12),

@@ -5,7 +5,7 @@
   "use strict";
 
   var API = (window.QENBEL_API || "").replace(/\/$/, "");
-  var TEAM = "admin.qenbel@gmail.com";
+  var TEAM = "contact@qenbel.site";
   var STORE_KEY = "qenbel:chats:v2";
   var OLD_KEY = "qenbel:chat:v1";
   var EMAIL_KEY = "qenbel:email";
