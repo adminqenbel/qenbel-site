@@ -100,3 +100,9 @@ test("search: only mail sent to our own addresses is looked at, never the rest o
   }
   assert.match(q, /\(to:[^)]+\)$/);   // the address filter is one parenthesised group at the end
 });
+
+test("schedule: the check interval is one Apps Script accepts", () => {
+  assert.ok([1, 5, 10, 15, 30].includes(C.CHECK_EVERY_MINUTES), String(C.CHECK_EVERY_MINUTES));
+  assert.equal(C.CHECK_EVERY_MINUTES, 1);
+  assert.match(src, /everyMinutes\(CONFIG\.CHECK_EVERY_MINUTES\)/);
+});

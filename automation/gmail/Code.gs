@@ -2,7 +2,7 @@
  * QenBel mailbox automation. Google Apps Script that runs inside the Gmail account that receives
  * mail for qenbel.site (ImprovMX forwards support@, info@, admin@ and contact@ to that Gmail).
  *
- * What it does, every 5 minutes, to NEW mail in the inbox (handled mail is tracked by label, not by read or unread):
+ * What it does, every minute (CHECK_EVERY_MINUTES), to NEW mail in the inbox (handled mail is tracked by label, not by read or unread):
  *   1. Labels each conversation by the address it was sent to (QenBel/support, QenBel/contact, ...).
  *   2. Flags security reports, privacy requests and anything marked [Urgent].
  *   3. Sends one automatic acknowledgement, from contact@qenbel.site, to people who write to
@@ -31,6 +31,10 @@ var CONFIG = {
   // mail in the same inbox is never read, labelled or counted against MAX_THREADS_PER_RUN.
   // Handled mail is tracked with the qenbel-processed label, not with read/unread, so opening a message
   // before the next run does not make the script miss it.
+  // How often the script looks for new mail. Apps Script only allows 1, 5, 10, 15 or 30.
+  // After changing it, run setup again so the trigger is replaced.
+  CHECK_EVERY_MINUTES: 1,
+
   SEARCH_BASE: 'in:inbox newer_than:2d -label:qenbel-processed',
   MAX_THREADS_PER_RUN: 20,
   MAX_ACKS_PER_DAY: 50,                // Gmail limits how many emails a script may send each day
@@ -257,7 +261,7 @@ function processInbox() {
   }
 }
 
-// Run once by hand. Checks the send-as address, creates labels and installs the 5 minute trigger.
+// Run once by hand. Checks the send-as address, creates labels and installs the trigger (CHECK_EVERY_MINUTES).
 function setup() {
   var aliases = GmailApp.getAliases();
   if (aliases.indexOf(CONFIG.SEND_AS) === -1) {
@@ -268,8 +272,8 @@ function setup() {
   for (var i = 0; i < names.length; i++) labelNamed_(CONFIG.LABEL_PREFIX + names[i]);
 
   uninstall();
-  ScriptApp.newTrigger('processInbox').timeBased().everyMinutes(5).create();
-  console.log('Setup done. Labels created and a 5 minute trigger installed. DRY_RUN is ' + CONFIG.DRY_RUN + '.');
+  ScriptApp.newTrigger('processInbox').timeBased().everyMinutes(CONFIG.CHECK_EVERY_MINUTES).create();
+  console.log('Setup done. Labels created and a trigger every ' + CONFIG.CHECK_EVERY_MINUTES + ' minute(s) installed. DRY_RUN is ' + CONFIG.DRY_RUN + '.');
 }
 
 // Stops the automation.

@@ -6,7 +6,7 @@ Mail path: `support@ / info@ / admin@ / contact@qenbel.site` -> ImprovMX -> Gmai
 
 ## What it does
 
-Every 5 minutes, for new mail in the inbox (handled mail gets a hidden `qenbel-processed` label, so it makes no difference whether you have already opened a message):
+Every minute (`CHECK_EVERY_MINUTES`, 1 is the fastest Google allows), for new mail in the inbox (handled mail gets a hidden `qenbel-processed` label, so it makes no difference whether you have already opened a message):
 
 | Step | Detail |
 | --- | --- |
