@@ -79,3 +79,14 @@ test("acknowledgements: carry the reference, plain text, no prices, no delivery 
   assert.match(g.buildAck("general", "R"), /Nothing is agreed until/);
   assert.match(g.buildAck("security", "R"), /do not share the details/);
 });
+
+test("search: only mail sent to our own addresses is looked at, never the rest of the inbox", () => {
+  const q = g.buildSearch(C);
+  assert.ok(q.startsWith("in:inbox is:unread"));
+  assert.ok(q.includes("-label:qenbel-processed"));
+  for (const n of ["support", "contact", "info", "admin"]) {
+    assert.ok(q.includes(`to:${n}@qenbel.site`), n);
+    assert.ok(q.includes(`cc:${n}@qenbel.site`), n);
+  }
+  assert.match(q, /\(to:[^)]+\)$/);   // the address filter is one parenthesised group at the end
+});

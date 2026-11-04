@@ -27,7 +27,9 @@ var CONFIG = {
   ALIAS_NAMES: ['support', 'contact', 'info', 'admin'],
   ACK_ALIASES: ['support', 'contact', 'info'],   // writing to admin@ gets no automatic reply
 
-  SEARCH: 'in:inbox is:unread newer_than:2d -label:qenbel-processed',
+  // The search is narrowed to mail addressed to our own addresses (see buildSearch), so personal
+  // mail in the same inbox is never read, labelled or counted against MAX_THREADS_PER_RUN.
+  SEARCH_BASE: 'in:inbox is:unread newer_than:2d -label:qenbel-processed',
   MAX_THREADS_PER_RUN: 20,
   MAX_ACKS_PER_DAY: 50,                // Gmail limits how many emails a script may send each day
   ACK_PER_SENDER_HOURS: 24,
@@ -59,6 +61,17 @@ function findAliases(toText, ccText, cfg) {
     if (all.indexOf(addr) !== -1) names.push(cfg.ALIAS_NAMES[i]);
   }
   return names;
+}
+
+// The Gmail search that finds only mail sent to one of our addresses, e.g.
+// in:inbox is:unread ... (to:support@qenbel.site OR cc:support@qenbel.site OR to:contact@qenbel.site ...)
+function buildSearch(cfg) {
+  var parts = [];
+  for (var i = 0; i < cfg.ALIAS_NAMES.length; i++) {
+    var addr = cfg.ALIAS_NAMES[i] + '@' + cfg.DOMAIN;
+    parts.push('to:' + addr, 'cc:' + addr);
+  }
+  return cfg.SEARCH_BASE + ' (' + parts.join(' OR ') + ')';
 }
 
 // The kind of message, from the SUBJECT only. The website's security and privacy links write these subjects.
@@ -160,7 +173,7 @@ function processInbox() {
   try {
     var processed = labelNamed_(CONFIG.PROCESSED_LABEL);
     var state = loadState_();
-    var threads = GmailApp.search(CONFIG.SEARCH, 0, CONFIG.MAX_THREADS_PER_RUN);
+    var threads = GmailApp.search(buildSearch(CONFIG), 0, CONFIG.MAX_THREADS_PER_RUN);
     log_('found ' + threads.length + ' new conversation(s)');
 
     for (var i = 0; i < threads.length; i++) {
@@ -172,12 +185,14 @@ function processInbox() {
       var cls = classify(subject);
       var fromAddr = firstAddress(last.getFrom());
 
+      // Not addressed to one of our addresses (the search is only a first filter): leave it completely alone.
+      if (!aliases.length) { log_('skipped, not sent to one of our addresses: "' + subject + '"'); continue; }
+
       // Mark as handled first: if anything below fails or times out, nothing is sent twice.
       if (!CONFIG.DRY_RUN) thread.addLabel(processed);
 
       var labels = [];
       for (var a = 0; a < aliases.length; a++) labels.push(CONFIG.LABEL_PREFIX + aliases[a]);
-      if (!aliases.length) labels.push(CONFIG.LABEL_PREFIX + 'other');
       if (cls.kind !== 'general') labels.push(CONFIG.LABEL_PREFIX + cls.kind);
       if (cls.urgent) labels.push(CONFIG.LABEL_PREFIX + 'urgent');
       log_('"' + subject + '" from ' + fromAddr + ' to [' + aliases.join(',') + '] kind=' + cls.kind + (cls.urgent ? ' urgent' : '') + ' -> labels ' + labels.join(', '));
@@ -224,7 +239,7 @@ function setup() {
     throw new Error(CONFIG.SEND_AS + ' is not a "Send mail as" address of this Gmail account. Found: ' + aliases.join(', '));
   }
   labelNamed_(CONFIG.PROCESSED_LABEL);
-  var names = CONFIG.ALIAS_NAMES.concat(['other', 'security', 'privacy', 'urgent', 'acknowledged']);
+  var names = CONFIG.ALIAS_NAMES.concat(['security', 'privacy', 'urgent', 'acknowledged']);
   for (var i = 0; i < names.length; i++) labelNamed_(CONFIG.LABEL_PREFIX + names[i]);
 
   uninstall();

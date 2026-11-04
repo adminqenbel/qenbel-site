@@ -10,7 +10,7 @@ Every 5 minutes, for new unread mail in the inbox:
 
 | Step | Detail |
 | --- | --- |
-| Label by address | `QenBel/support`, `QenBel/contact`, `QenBel/info`, `QenBel/admin`, or `QenBel/other` |
+| Label by address | `QenBel/support`, `QenBel/contact`, `QenBel/info` or `QenBel/admin`. Only mail addressed to those four addresses is ever read. Other mail in the inbox (personal mail, Google or GoDaddy notices) is not touched, labelled or counted. |
 | Flag | `QenBel/security` (subject "Security report"), `QenBel/privacy` (subject "Privacy request"), `QenBel/urgent` (subject has `[Urgent]`). These are also marked important, and urgent is starred. |
 | Acknowledge | One automatic reply with a reference number such as `QB-20261104-K7QM`, only for a NEW conversation written to support@, contact@ or info@. Three wordings: general, security, privacy. |
 
