@@ -14,7 +14,7 @@ Every 5 minutes, for new unread mail in the inbox:
 | Flag | `QenBel/security` (subject "Security report"), `QenBel/privacy` (subject "Privacy request"), `QenBel/urgent` (subject has `[Urgent]`). These are also marked important, and urgent is starred. |
 | Acknowledge | One automatic reply with a reference number such as `QB-20261104-K7QM`, only for a NEW conversation written to support@, contact@ or info@. Three wordings: general, security, privacy. |
 
-The support page on the website writes these subjects, so its requests are sorted and acknowledged without any extra code.
+The website already writes these subjects: the "Report a security issue" links in every footer use "Security report", and the privacy contact links use "Privacy request". Write the same words at the start of a subject by hand and the script treats it the same way.
 
 It never replies to: no-reply or bounce senders, mailing lists, auto-replies, your own addresses, a second message in a conversation, the same sender twice in 24 hours, or more than 50 senders a day.
 

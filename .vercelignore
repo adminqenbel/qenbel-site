@@ -5,3 +5,9 @@ automation
 .github
 *.md
 render.yaml
+
+# Parked: not deployed until the support subdomain and the SLA values are decided.
+support.html
+support.css
+support.js
+sla.html

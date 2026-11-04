@@ -61,7 +61,7 @@ function findAliases(toText, ccText, cfg) {
   return names;
 }
 
-// The kind of message, from the SUBJECT only. The support page writes these subjects.
+// The kind of message, from the SUBJECT only. The website's security and privacy links write these subjects.
 function classify(subject) {
   var s = String(subject || '');
   var kind = 'general';
