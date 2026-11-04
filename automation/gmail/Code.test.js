@@ -41,6 +41,15 @@ test("skip: automatic, list, own and header-marked mail never gets a reply", () 
   assert.equal(g.skipReason("asha@acme.in", none, C), "");
   assert.notEqual(g.skipReason("no-reply@bank.com", none, C), "");
   assert.notEqual(g.skipReason("mailer-daemon@googlemail.com", none, C), "");
+  // robot addresses that do not START with "noreply", as seen in the first dry run
+  for (const robot of ["gmail-noreply@google.com", "mail-noreply@google.com", "ses-noreply@amazon.com", "no-reply@accounts.google.com",
+    "noreply-accounts@google.com", "notifications@github.com", "alerts@bank.in", "donotreply@x.com", "bounce+abc@mg.x.com", "newsletter@x.com"]) {
+    assert.equal(g.skipReason(robot, none, C), "automatic sender", robot);
+  }
+  // real people are still acknowledged
+  for (const person of ["asha@acme.in", "hemapriyan.kuppusamy@gmail.com", "connectwithhemapriyan@gmail.com", "sarah@smtp2go.com", "priya.nair@startup.io", "reply@acme.in", "rebotham@x.com"]) {
+    assert.equal(g.skipReason(person, none, C), "", person);
+  }
   assert.notEqual(g.skipReason("contact@qenbel.site", none, C), "");
   assert.notEqual(g.skipReason("anyone@qenbel.site", none, C), "");
   assert.notEqual(g.skipReason("asha@acme.in", { autoSubmitted: "auto-replied" }, C), "");

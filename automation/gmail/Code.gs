@@ -92,7 +92,13 @@ function skipReason(fromAddr, headers, cfg) {
   var h = headers || {};
   if (!from) return 'no sender address';
   if (from === cfg.SEND_AS.toLowerCase() || from.slice(-(cfg.DOMAIN.length + 1)) === '@' + cfg.DOMAIN) return 'our own address';
-  if (/^(no-?reply|do-?not-?reply|donotreply|mailer-daemon|postmaster|bounces?|notifications?|alerts?|daemon)([+._-].*)?@/.test(from)) return 'automatic sender';
+  // Words that mark a robot address anywhere before the @, e.g. gmail-noreply@, mail.no-reply@, notifications@.
+  var local = from.split('@')[0];
+  if (/no[._-]?reply|do[._-]?not[._-]?reply|mailer[._-]?daemon|postmaster|bounce|daemon|notification|notify|newsletter|auto[._-]?(reply|response|mail|submitted|generated)|automated/.test(local)) return 'automatic sender';
+  var tokens = local.split(/[._+\-]+/);
+  for (var t = 0; t < tokens.length; t++) {
+    if (/^(alerts?|mailer|system|robot|bot|ses|noreply)$/.test(tokens[t])) return 'automatic sender';
+  }
   if (h.autoSubmitted && String(h.autoSubmitted).toLowerCase() !== 'no') return 'auto-submitted';
   if (/^(bulk|list|junk|auto_reply)$/i.test(String(h.precedence || '').trim())) return 'bulk or list mail';
   if (h.listId) return 'mailing list';
