@@ -1,0 +1,107 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "QenBel assistant API",
+    "version": "1.0.0",
+    "summary": "The API behind the assistant on qenbel.site.",
+    "description": "Returns a short text reply from QenBel's assistant, which only answers questions about QenBel and its services. It exists to serve the assistant on qenbel.site. Calls are rate limited and capped each day, and automated use may be refused. It gives no prices and no legal advice. Do not send passwords, keys, secrets or customer data. Messages are processed by an AI provider; see the Privacy Policy.",
+    "contact": { "name": "QenBel", "email": "contact@qenbel.site", "url": "https://qenbel.site/about" },
+    "termsOfService": "https://qenbel.site/terms"
+  },
+  "externalDocs": { "description": "Human readable documentation", "url": "https://qenbel.site/api-docs" },
+  "servers": [{ "url": "https://api.qenbel.site", "description": "Production" }],
+  "paths": {
+    "/api/chat": {
+      "post": {
+        "operationId": "chat",
+        "summary": "Send a conversation and get the assistant's next reply",
+        "description": "Send the recent messages of one conversation. The last message must come from the user. Assistant messages from earlier turns must be sent back exactly as received, together with their `sig`; assistant messages without a valid `sig` are ignored.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ChatRequest" },
+              "example": { "messages": [{ "role": "user", "content": "What does an Application Health Check involve?" }] }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The assistant's reply",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ChatResponse" },
+                "example": { "reply": "An Application Health Check is a review of an application you already have...", "sig": "mgygzAQp8X9OZJ7LPmXE3P-wYEf4opclcJAnsKzpwro", "contact": false }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/Error" },
+          "403": { "$ref": "#/components/responses/Error" },
+          "413": { "$ref": "#/components/responses/Error" },
+          "429": {
+            "description": "Too many requests. Wait for the number of seconds in `Retry-After`.",
+            "headers": { "Retry-After": { "schema": { "type": "integer" }, "description": "Seconds to wait" } },
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+          },
+          "502": { "$ref": "#/components/responses/Error" },
+          "503": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health",
+        "summary": "Is the API up",
+        "responses": {
+          "200": {
+            "description": "The API is running",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "ok": { "type": "boolean", "const": true } }, "required": ["ok"] } } }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "required": ["role", "content"],
+        "properties": {
+          "role": { "type": "string", "enum": ["user", "assistant"] },
+          "content": { "type": "string", "minLength": 1, "maxLength": 1500 },
+          "sig": { "type": "string", "maxLength": 64, "description": "Required for assistant messages: the `sig` returned with that reply. Not used for user messages." }
+        }
+      },
+      "ChatRequest": {
+        "type": "object",
+        "required": ["messages"],
+        "properties": {
+          "messages": { "type": "array", "minItems": 1, "maxItems": 40, "items": { "$ref": "#/components/schemas/Message" }, "description": "Recent messages, oldest first. Only the latest 16 are used. The last one must have role `user`." }
+        }
+      },
+      "ChatResponse": {
+        "type": "object",
+        "required": ["reply", "sig", "contact"],
+        "properties": {
+          "reply": { "type": "string", "description": "Plain text, at most 1500 characters." },
+          "sig": { "type": "string", "description": "Send this back with this reply when you continue the conversation." },
+          "contact": { "type": "boolean", "description": "True when the reply points the person to the QenBel team by email." }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": { "type": "string", "examples": ["bad_request", "origin_not_allowed", "too_large", "rate_limited", "busy", "assistant_unavailable"] },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "Error": {
+        "description": "The request could not be answered. See `error`.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      }
+    }
+  }
+}

@@ -46,3 +46,7 @@ td:first-child { color: var(--ink); font-weight: 600; min-width: 11rem; }
 
 /* Draft placeholders: values that must be confirmed before a document page is published. */
 .tbc { padding: 0.05em 0.35em; color: var(--ink); background: #FFF1B8; border-radius: 4px; }
+
+/* Code samples and inline code (API documentation). */
+.doc code { padding: 0.05em 0.3em; font: 0.9em ui-monospace, "SFMono-Regular", Consolas, monospace; background: var(--pale); border-radius: 4px; }
+.doc pre.code { margin-top: 0.85rem; padding: 0.9rem 1.1rem; overflow-x: auto; font: 0.88rem/1.55 ui-monospace, "SFMono-Regular", Consolas, monospace; color: var(--ink); background: var(--pale); border-left: 3px solid var(--blue); white-space: pre; }

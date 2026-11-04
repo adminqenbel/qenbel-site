@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "qenbel-contact",
+      "type": "skill-md",
+      "description": "Explains what QenBel does and how to start working with it or reach its team by email.",
+      "url": "https://qenbel.site/.well-known/agent-skills/qenbel-contact/SKILL.md",
+      "digest": "sha256:d9163ef35a28c53e3184000e7d25d069633ecef2bc587146d0ce2f77d66d889a"
+    }
+  ]
+}

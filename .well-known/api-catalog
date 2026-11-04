@@ -1,0 +1,16 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.qenbel.site/api/chat",
+      "service-desc": [
+        { "href": "https://qenbel.site/openapi.json", "type": "application/vnd.oai.openapi+json" }
+      ],
+      "service-doc": [
+        { "href": "https://qenbel.site/api-docs", "type": "text/html" }
+      ],
+      "status": [
+        { "href": "https://api.qenbel.site/health", "type": "application/json" }
+      ]
+    }
+  ]
+}

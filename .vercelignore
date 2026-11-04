@@ -3,7 +3,10 @@ backend
 scripts
 automation
 .github
-*.md
+/CONTENT.md
+/DEPLOY.md
+/README.md
+/SECURITY.md
 render.yaml
 
 # Parked: not deployed until the support subdomain and the SLA values are decided.
