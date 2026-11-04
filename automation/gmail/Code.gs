@@ -2,7 +2,7 @@
  * QenBel mailbox automation. Google Apps Script that runs inside the Gmail account that receives
  * mail for qenbel.site (ImprovMX forwards support@, info@, admin@ and contact@ to that Gmail).
  *
- * What it does, every 5 minutes, to NEW unread mail in the inbox:
+ * What it does, every 5 minutes, to NEW mail in the inbox (handled mail is tracked by label, not by read or unread):
  *   1. Labels each conversation by the address it was sent to (QenBel/support, QenBel/contact, ...).
  *   2. Flags security reports, privacy requests and anything marked [Urgent].
  *   3. Sends one automatic acknowledgement, from contact@qenbel.site, to people who write to
@@ -66,7 +66,7 @@ function findAliases(toText, ccText, cfg) {
 }
 
 // The Gmail search that finds only mail sent to one of our addresses, e.g.
-// in:inbox is:unread ... (to:support@qenbel.site OR cc:support@qenbel.site OR to:contact@qenbel.site ...)
+// in:inbox newer_than:2d -label:qenbel-processed (to:support@qenbel.site OR cc:support@qenbel.site OR to:contact@qenbel.site ...)
 function buildSearch(cfg) {
   var parts = [];
   for (var i = 0; i < cfg.ALIAS_NAMES.length; i++) {
