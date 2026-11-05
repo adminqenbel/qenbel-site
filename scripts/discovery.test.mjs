@@ -92,7 +92,7 @@ test("skill: gives no prices and no promises, and keeps secrets out", () => {
 test("deploy: discovery files are not excluded by .vercelignore, internal files are", () => {
   const ignore = read(".vercelignore").split(/\r?\n/).filter((l) => l && !l.startsWith("#"));
   assert.ok(!ignore.includes("*.md"), "a blanket *.md would hide SKILL.md");
-  for (const must of ["backend", "scripts", "automation"]) assert.ok(ignore.includes(must), must);
+  for (const must of ["backend", "scripts", "automation", "docs"]) assert.ok(ignore.includes(must), must);
   for (const public_ of [".well-known", "openapi.json", "api-docs.html", "webmcp.js"]) assert.ok(!ignore.includes(public_), public_);
 });
 

@@ -2,6 +2,7 @@
 backend
 scripts
 automation
+docs
 .github
 /CONTENT.md
 /DEPLOY.md
