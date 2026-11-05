@@ -2,6 +2,7 @@
 
 This is the source of truth for the wording on `index.html` and in `backend/src/prompt.js`. Change it here first, then in those two places.
 Brand is always written **QenBel**. Contact is email only: contact@qenbel.site. The site and assistant never state prices.
+The client portal (https://portal.qenbel.site, a separate project) is linked from the top bar and footer as "Client portal". It is for approved clients. Contact is still email only. The portal is `noindex` and is not in `sitemap.xml`.
 
 ## Positioning
 - Company line: QenBel: software engineering, security and production readiness.
@@ -34,7 +35,7 @@ Founder: Hemapriyan R K. Company: QenBel. Website: qenbel.site. Contact: contact
 - "Email the team" buttons open the visitor's own email; the server never sends email or stores chats.
 
 ## Legal pages
-`privacy.html`, `terms.html`, `compliance.html`. They describe what the site and assistant actually do. Update them whenever a provider, a data flow or a commitment changes.
+`privacy.html`, `terms.html`, `compliance.html`. They describe what the site, the assistant and the client portal actually do. Update them whenever a provider, a data flow or a commitment changes. Privacy section 14 and Terms section 14 cover the portal and must match the Portal notice at portal.qenbel.site/policies.
 
 ## To confirm before relying on the legal pages
 See the list in the hand-over message: legal entity details, retention period, grievance contact, operational commitments (MFA, secret storage, backups, CERT-In contact and logs), and review by an Indian technology and privacy lawyer.
